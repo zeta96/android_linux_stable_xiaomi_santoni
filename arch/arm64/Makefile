@@ -56,7 +56,11 @@ KBUILD_AFLAGS	+= $(vdso32)
 KBUILD_CFLAGS	+= $(call cc-option, -mcpu=cortex-a53+crypto+crc)
 KBUILD_CFLAGS	+= $(call cc-option, -mtune=cortex-a53)
 
+ifeq ($(cc-name),clang)
+KBUILD_CFLAGS	+= -DCONFIG_ARCH_SUPPORTS_INT128
+else
 KBUILD_CFLAGS	+= $(call cc-ifversion, -ge, 0500, -DCONFIG_ARCH_SUPPORTS_INT128)
+endif
 
 ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
 KBUILD_CPPFLAGS	+= -mbig-endian
