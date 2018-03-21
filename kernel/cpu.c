@@ -415,6 +415,10 @@ int __ref cpu_down(unsigned int cpu)
 {
 	int err;
 
+	/* kthreads and workqueues require CPU0 to stay online */
+	if (!cpu)
+		return -EINVAL;
+
 	cpu_maps_update_begin();
 
 	/* Don't offline CPU 0,4 */
