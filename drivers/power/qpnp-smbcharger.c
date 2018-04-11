@@ -435,7 +435,7 @@ module_param_named(
 	debug_mask, smbchg_debug_mask, int, S_IRUSR | S_IWUSR
 );
 
-static int smbchg_parallel_en = 0;
+static int smbchg_parallel_en = 1;
 module_param_named(
 	parallel_en, smbchg_parallel_en, int, S_IRUSR | S_IWUSR
 );
@@ -452,13 +452,13 @@ module_param_named(
 	int, S_IRUSR | S_IWUSR
 );
 
-static int smbchg_default_hvdcp_icl_ma = 1200;
+static int smbchg_default_hvdcp_icl_ma = 2000;
 module_param_named(
 	default_hvdcp_icl_ma, smbchg_default_hvdcp_icl_ma,
 	int, S_IRUSR | S_IWUSR
 );
 
-static int smbchg_default_hvdcp3_icl_ma = 2000;
+static int smbchg_default_hvdcp3_icl_ma = 3000;
 module_param_named(
 	default_hvdcp3_icl_ma, smbchg_default_hvdcp3_icl_ma,
 	int, S_IRUSR | S_IWUSR
@@ -3988,7 +3988,8 @@ static void check_battery_type(struct smbchg_chip *chip)
 	}
 }
 
-#define call_current_max 900
+#define call_current_max 2000
+
 void smbchg_set_calling_current(struct smbchg_chip *chip)
 {
 	enum power_supply_type usb_supply_type;
@@ -3998,7 +3999,7 @@ void smbchg_set_calling_current(struct smbchg_chip *chip)
 	pr_smb(PR_MISC, "chip->call_state =%d, usb_supply_type =%d\n", chip->call_state, usb_supply_type);
 	if (chip->call_state == 0) {
 		if (usb_supply_type == POWER_SUPPLY_TYPE_USB_DCP)  {
-			pr_smb(PR_MISC, "call_icl_voltage vote 900mA when calling\n");
+			pr_smb(PR_MISC, "call_icl_voltage vote 2000mA when calling\n");
 			vote(chip->usb_icl_votable, CALL_ICL_VOTER, true, call_current_max);
 		}
 	} else {
@@ -4743,11 +4744,6 @@ static int smbchg_change_usb_supply_type(struct smbchg_chip *chip,
 	 * modes, skip all BC 1.2 current if external typec is supported.
 	 * Note: for SDP supporting current based on USB notifications.
 	 */
-
-	if (version_flag) {
-		smbchg_default_hvdcp3_icl_ma = 1500;
-		smbchg_default_dcp_icl_ma = 1500;
-	}
 
 	if (chip->typec_psy && (type != POWER_SUPPLY_TYPE_USB))
 		current_limit_ma = chip->typec_current_ma;
@@ -6642,9 +6638,6 @@ static irqreturn_t batt_cold_handler(int irq, void *_chip)
 	return IRQ_HANDLED;
 }
 
-#define BATT_WARM_CURRENT		900
-#define BATT_WARM_VOLTAGE		15
-
 static irqreturn_t batt_warm_handler(int irq, void *_chip)
 {
 	struct smbchg_chip *chip = _chip;
@@ -6653,10 +6646,7 @@ static irqreturn_t batt_warm_handler(int irq, void *_chip)
 	smbchg_read(chip, &reg, chip->bat_if_base + RT_STS, 1);
 	chip->batt_warm = !!(reg & HOT_BAT_SOFT_BIT);
 	pr_smb(PR_INTERRUPT, "triggered: 0x%02x\n", reg);
-	smbchg_fastchg_current_comp_set(chip,
-			BATT_WARM_CURRENT);
-	smbchg_float_voltage_comp_set(chip,
-			BATT_WARM_VOLTAGE);
+
 	smbchg_parallel_usb_check_ok(chip);
 	if (chip->psy_registered)
 		power_supply_changed(&chip->batt_psy);
@@ -6665,8 +6655,6 @@ static irqreturn_t batt_warm_handler(int irq, void *_chip)
 	return IRQ_HANDLED;
 }
 
-#define BATT_COOL_CURRENT		900
-#define BATT_COOL_VOLTAGE		0
 static irqreturn_t batt_cool_handler(int irq, void *_chip)
 {
 	struct smbchg_chip *chip = _chip;
@@ -6674,13 +6662,7 @@ static irqreturn_t batt_cool_handler(int irq, void *_chip)
 
 	smbchg_read(chip, &reg, chip->bat_if_base + RT_STS, 1);
 	chip->batt_cool = !!(reg & COLD_BAT_SOFT_BIT);
-	pr_smb(PR_INTERRUPT, "triggered: 0x%02x, batt_cool=%d\n", reg, chip->batt_cool);
-	if (chip->batt_cool) {
-		smbchg_fastchg_current_comp_set(chip,
-				BATT_COOL_CURRENT);
-		smbchg_float_voltage_comp_set(chip,
-				BATT_COOL_VOLTAGE);
-	}
+	pr_smb(PR_INTERRUPT, "triggered: 0x%02x\n", reg);
 	smbchg_parallel_usb_check_ok(chip);
 	if (chip->psy_registered)
 		power_supply_changed(&chip->batt_psy);
@@ -7912,7 +7894,6 @@ err:
 
 #define DEFAULT_VLED_MAX_UV		3500000
 #define DEFAULT_FCC_MA			2000
-#define INDIA_DEFAULT_FCC_MA		1500
 static int smb_parse_dt(struct smbchg_chip *chip)
 {
 	int rc = 0, ocp_thresh = -EINVAL;
@@ -7934,12 +7915,7 @@ static int smb_parse_dt(struct smbchg_chip *chip)
 			"fastchg-current-ma", rc, 1);
 
 	if (chip->cfg_fastchg_current_ma == -EINVAL) {
-		pr_err("version_flag\n");
-		if (version_flag)
-			chip->cfg_fastchg_current_ma = INDIA_DEFAULT_FCC_MA;
-		else
-			chip->cfg_fastchg_current_ma = DEFAULT_FCC_MA;
-
+		chip->cfg_fastchg_current_ma = DEFAULT_FCC_MA;
 		pr_err("chip->cfg_fastchg_current_ma = %d\n", chip->cfg_fastchg_current_ma);
 	}
 
@@ -8854,8 +8830,6 @@ static int smbchg_probe(struct spmi_device *spmi)
 	mutex_init(&chip->wipower_config);
 	mutex_init(&chip->usb_status_lock);
 	device_init_wakeup(chip->dev, true);
-
-	get_version_change_current(chip);
 
 	rc = smbchg_parse_peripherals(chip);
 	if (rc) {
