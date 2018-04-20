@@ -520,6 +520,12 @@ extern struct cpufreq_governor cpufreq_gov_sched;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTELLIACTIVE)
 extern struct cpufreq_governor cpufreq_gov_intelliactive;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_intelliactive)
+
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_LISI)
+extern struct cpufreq_governor cpufreq_gov_lisi;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_lisi)
+
+
 #endif
 
 /*********************************************************************
