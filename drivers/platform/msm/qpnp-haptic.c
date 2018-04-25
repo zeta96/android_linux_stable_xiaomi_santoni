@@ -397,6 +397,10 @@ struct qpnp_hap {
 
 static struct qpnp_hap *ghap;
 
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+static struct qpnp_hap *vib_dev;
+#endif
+
 /* helper to read a pmic register */
 static int qpnp_hap_read_reg(struct qpnp_hap *hap, u8 *data, u16 addr)
 {
@@ -1707,6 +1711,15 @@ static void qpnp_hap_td_enable(struct timed_output_dev *dev, int value)
 	schedule_work(&hap->work);
 }
 
+#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+void set_vibrate(int value)
+{
+	if (value > 0)
+		qpnp_hap_td_enable(&vib_dev->timed_dev, value);
+	return;
+}
+#endif
+
 /* play pwm bytes */
 int qpnp_hap_play_byte(u8 data, bool on)
 {
@@ -2608,6 +2621,10 @@ static int qpnp_haptic_probe(struct spmi_device *spmi)
 	}
 
 	ghap = hap;
+	
+	#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
+	vib_dev = hap;
+	#endif
 
 	return 0;
 
