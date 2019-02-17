@@ -676,6 +676,11 @@ else
 KBUILD_CFLAGS	+= -O3 -ffast-math -funsafe-math-optimizations -march=armv8-a -mtune=cortex-a53 -mcpu=cortex-a53 -floop-nest-optimize -fgraphite-identity -ftree-loop-distribution
 endif
 
+ifeq ($(cc-name),gcc)
+KBUILD_CFLAGS += -mtune=cortex-a73.cortex-a53 -mcpu=cortex-a73.cortex-a53 -floop-nest-optimize -fgraphite-identity -ftree-loop-distribution
+endif
+
+
 ifdef CONFIG_CC_WERROR
 KBUILD_CFLAGS	+= -Werror
 endif
