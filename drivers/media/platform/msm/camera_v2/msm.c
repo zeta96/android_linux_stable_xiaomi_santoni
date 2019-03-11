@@ -1330,8 +1330,8 @@ static int msm_probe(struct platform_device *pdev)
 	rc = media_device_register(msm_v4l2_dev->mdev);
 	if (WARN_ON(rc < 0))
 		goto media_fail;
-
-	rc = media_entity_init(&pvdev->vdev->entity,  0, NULL, 0);
+        rc = media_entity_init(&pvdev->vdev->entity,
+			0, NULL, 0);
 	if (WARN_ON(rc < 0))
 		goto entity_fail;
 

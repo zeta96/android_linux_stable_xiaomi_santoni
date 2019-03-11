@@ -3750,7 +3750,6 @@ int msm_comm_qbuf(struct msm_vidc_inst *inst, struct vb2_buffer *vb)
 	 * 1) Hardware isn't ready (that's simple)
 	 */
 	defer = defer ? true : inst->state != MSM_VIDC_START_DONE;
-
 	/*
 	 * 2) The client explicitly tells us not to because it wants this
 	 * buffer to be batched with future frames.  The batch size (on both
