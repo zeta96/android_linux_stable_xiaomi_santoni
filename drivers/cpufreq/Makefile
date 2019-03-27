@@ -20,7 +20,7 @@ obj-$(CONFIG_CPU_FREQ_GOV_INTELLIACTIVE)+= cpufreq_intelliactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_LISI)         += cpufreq_lisi.o
 obj-$(CONFIG_CPU_FREQ_GOV_ALESSA) 	+= cpufreq_alessa.o
 obj-$(CONFIG_CPU_FREQ_GOV_ELECTRON)	+= cpufreq_electron.o
-
+obj-$(CONFIG_CPU_FREQ_GOV_DARKNESS)	+= cpufreq_darkness.o
 obj-$(CONFIG_CPU_BOOST)			+= cpu-boost.o
 
 obj-$(CONFIG_CPUFREQ_DT)		+= cpufreq-dt.o
