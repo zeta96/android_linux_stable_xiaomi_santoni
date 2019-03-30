@@ -1,3 +1,12 @@
+ Add wlancaf wlancaf-merge.py
+        to : manage wlan prima
+        usage :  ./wlancaf-merge.py -W prima -I initial -T <tag>
+
+        initial: dont have merge with prima
+        or update : to update with laest prima
+
+
+
         Linux kernel release 3.x <http://kernel.org/>
 
 These are the release notes for Linux version 3.  Read them carefully,
