@@ -110,8 +110,8 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/msm_thermal/vdd_restriction/enabled 0
 	    
 	# GPU
-	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 475000000
-	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 216000000
+	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 550000000
+	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 240000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
 	  write sys/module/simple_gpu_algorithm/parameters/simple_laziness 1
@@ -121,6 +121,9 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 25
 	  write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 25
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/adrenoboost 1
+	  write /sys/kernel/gpu/gpu_min_clock 240
+	  write /sys/kernel/gpu/gpu_max_clock 550
+	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/device/kgsl/kgsl-3d0/default_pwrlevel 5
 
 	# I/O
 	  write /sys/block/mmcblk0/queue/scheduler zen
@@ -140,7 +143,7 @@ on property:persist.spectrum.profile=0
 	  write /proc/sys/vm/dirty_ratio 30
 	  write /proc/sys/vm/dirty_background_ratio 5
 	  write /proc/sys/vm/laptop_mode 1
-	  write /proc/sys/vm/swappiness 100
+	  write /proc/sys/vm/swappiness 60
 	  write /proc/sys/vm/dirty_writeback_centisecs 700
 	  write /proc/sys/vm/dirty_expire_centisecs 200
 	  write /proc/sys/vm/oom_kill_allocating_task 0
@@ -159,6 +162,7 @@ on property:persist.spectrum.profile=0
 	  write /sys/kernel/sched/gentle_fair_sleepers 1
 	  write /sys/kernel/sched/arch_power 1
 	  write /sys/kernel/power_suspend/power_suspend_mode 3
+	  write /sys/class/timed_output/vibrator/vtg_level 2691
 	  write /proc/sys/net/ipv4/tcp_congestion_control westwood
 	  
 
@@ -253,8 +257,8 @@ on property:persist.spectrum.profile=1
 	  write /sys/module/msm_thermal/vdd_restriction/enabled 0
 	    
 	# GPU
-	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 475000000
-	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 300000000
+	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 550000000
+	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 320000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
 	  write sys/module/simple_gpu_algorithm/parameters/simple_laziness 1
@@ -264,6 +268,9 @@ on property:persist.spectrum.profile=1
 	  write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 25
 	  write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 25
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/adrenoboost 3
+	  write /sys/kernel/gpu/gpu_min_clock 320
+	  write /sys/kernel/gpu/gpu_max_clock 550
+	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/device/kgsl/kgsl-3d0/default_pwrlevel 5
 
 	# I/O
 	  write /sys/block/mmcblk0/queue/scheduler deadline
@@ -302,6 +309,7 @@ on property:persist.spectrum.profile=1
 	  write /sys/kernel/sched/gentle_fair_sleepers 1
 	  write /sys/kernel/sched/arch_power 0
 	  write /sys/kernel/power_suspend/power_suspend_mode 3
+	  write /sys/class/timed_output/vibrator/vtg_level 2691
 	  write /proc/sys/net/ipv4/tcp_congestion_control westwood
 
 
@@ -398,7 +406,7 @@ on property:persist.spectrum.profile=2
 	    
 	# GPU
 	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 400000000
-	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 216000000
+	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 240000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
 	  write sys/module/simple_gpu_algorithm/parameters/simple_laziness 4
@@ -408,6 +416,9 @@ on property:persist.spectrum.profile=2
 	  write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 10
 	  write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 50
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/adrenoboost 0
+	  write /sys/kernel/gpu/gpu_min_clock 240
+	  write /sys/kernel/gpu/gpu_max_clock 400
+	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/device/kgsl/kgsl-3d0/default_pwrlevel 7
 
 	# I/O
 	  write /sys/block/mmcblk0/queue/scheduler noop
@@ -427,7 +438,7 @@ on property:persist.spectrum.profile=2
 	  write /proc/sys/vm/dirty_ratio 70
 	  write /proc/sys/vm/dirty_background_ratio 3
 	  write /proc/sys/vm/leptop_mode 1
-	  write /proc/sys/vm/swappiness 100
+	  write /proc/sys/vm/swappiness 40
 	  write /proc/sys/vm/dirty_writeback_centisecs 1000
 	  write /proc/sys/vm/dirty_expire_centisecs 300
 	  write /proc/sys/vm/oom_kill_allocating_task 1
@@ -446,6 +457,7 @@ on property:persist.spectrum.profile=2
 	  write /sys/kernel/sched/gentle_fair_sleepers 0
 	  write /sys/kernel/sched/arch_power 1
 	  write /sys/kernel/power_suspend/power_suspend_mode 3
+	  write /sys/class/timed_output/vibrator/vtg_level 2691
 	  write /proc/sys/net/ipv4/tcp_congestion_control westwood
 
 
@@ -541,8 +553,8 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/msm_thermal/vdd_restriction/enabled 0
 	    
 	# GPU
-	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 475000000
-	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 300000000
+	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 550000000
+	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 320000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
 	  write sys/module/simple_gpu_algorithm/parameters/simple_laziness 1
@@ -552,6 +564,9 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 15
 	  write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 20
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/adrenoboost 3
+	  write /sys/kernel/gpu/gpu_min_clock 320
+	  write /sys/kernel/gpu/gpu_max_clock 550
+	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/device/kgsl/kgsl-3d0/default_pwrlevel 5
 
 	# I/O
 	  write /sys/block/mmcblk0/queue/scheduler deadline
@@ -590,4 +605,5 @@ on property:persist.spectrum.profile=3
 	  write /sys/kernel/sched/gentle_fair_sleepers 1
 	  write /sys/kernel/sched/arch_power 0
 	  write /sys/kernel/power_suspend/power_suspend_mode 3
+	  write /sys/class/timed_output/vibrator/vtg_level 2691
 	  write /proc/sys/net/ipv4/tcp_congestion_control westwood
