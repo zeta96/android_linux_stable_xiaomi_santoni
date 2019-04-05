@@ -40,6 +40,8 @@ if [ $? != 0 -o -z "$(ls /tmp/anykernel/tools)" ]; then
 fi;
 chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 bb=/tmp/anykernel/tools/busybox;
+chmod 755 $bb;
+$bb chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 ui_print "$(file_getprop /tmp/anykernel/anykernel.sh kernel.string)";
 ui_print "  ";
 ui_print " _         ";
@@ -110,7 +112,15 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
 fi;
 
+ui_print " ";
+ui_print "Running fstrim...";
+fstrim -v /system;
+fstrim -v /data;
+fstrim -v /vendor;
+
 umount /system;
 umount /data;
+unmount_all;
+
 ui_print " ";
 ui_print "Done!";
