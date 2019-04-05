@@ -105,12 +105,12 @@ on property:persist.spectrum.profile=0
 	# THERMAL
 	  write /sys/module/msm_thermal/parameters/enabled Y
 	  write /sys/module/msm_thermal/parameters/limit_temp_degC 60
-	  write /sys/module/msm_thermal/parameters/core_limit_temp_degC 80
+	  write /sys/module/msm_thermal/parameters/core_limit_temp_degC 70
 	  write /sys/module/msm_thermal/core_control/enabled 0
 	  write /sys/module/msm_thermal/vdd_restriction/enabled 0
 	    
 	# GPU
-	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 550000000
+	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 500000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 240000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
@@ -122,7 +122,7 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 25
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/adrenoboost 1
 	  write /sys/kernel/gpu/gpu_min_clock 240
-	  write /sys/kernel/gpu/gpu_max_clock 550
+	  write /sys/kernel/gpu/gpu_max_clock 500
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/device/kgsl/kgsl-3d0/default_pwrlevel 5
 
 	# I/O
@@ -136,26 +136,30 @@ on property:persist.spectrum.profile=0
 	  write /sys/block/mmcblk1/queue/read_ahead_kb 1024
 	  write /sys/block/mmcblk1/queue/rotational 1
 	  write /sys/block/mmcblk1/queue/iostats 0
-	  write /sys/block/mmcblk1/queue/rq_affinity 2
+	  write /sys/block/mmcblk1/queue/rq_affinity 1
 	  write /sys/block/mmcblk1/queue/add_random 1
 	    
 	# VM
-	  write /proc/sys/vm/dirty_ratio 30
+	  write /proc/sys/vm/dirty_ratio 20
 	  write /proc/sys/vm/dirty_background_ratio 5
-	  write /proc/sys/vm/laptop_mode 1
+	  write /proc/sys/vm/laptop_mode 0
 	  write /proc/sys/vm/swappiness 60
-	  write /proc/sys/vm/dirty_writeback_centisecs 700
+	  write /proc/sys/vm/dirty_writeback_centisecs 500
 	  write /proc/sys/vm/dirty_expire_centisecs 200
 	  write /proc/sys/vm/oom_kill_allocating_task 0
 	  write /proc/sys/vm/page-cluster 3
 	  write /proc/sys/vm/swap_ratio_enable 80
 	  write /proc/sys/vm/overcommit_ratio 80
 	  write /proc/sys/vm/drop_caches 0
+          write /proc/sys/vm/vfs_cache_pressure 100
+	  write /proc/sys/vm/min_free_kbytes 6764
 
 	# LKM
 	  chmod 666 /sys/module/lowmemorykiller/parameters/minfree
 	  chown root /sys/module/lowmemorykiller/parameters/minfree
-	  write /sys/module/lowmemorykiller/parameters/minfree 14175,18900,23625,51975,70875,75600
+	  write /sys/module/lowmemorykiller/parameters/minfree 18432,23040,27648,32256,55296,80640
+	  write /sys/module/lowmemorykiller/parameters/cost 32
+	  write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
 
 	# Misc
 	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 1
@@ -291,18 +295,22 @@ on property:persist.spectrum.profile=1
 	  write /proc/sys/vm/dirty_background_ratio 5
 	  write /proc/sys/vm/laptop_mode 0
 	  write /proc/sys/vm/swappiness 100
-	  write /proc/sys/vm/dirty_writeback_centisecs 500
+	  write /proc/sys/vm/dirty_writeback_centisecs 1500
 	  write /proc/sys/vm/dirty_expire_centisecs 200
 	  write /proc/sys/vm/oom_kill_allocating_task 0
 	  write /proc/sys/vm/page-cluster 3
 	  write /proc/sys/vm/swap_ratio_enable 80
 	  write /proc/sys/vm/overcommit_ratio 50
 	  write /proc/sys/vm/drop_caches 2
+          write /proc/sys/vm/vfs_cache_pressure 100
+	  write /proc/sys/vm/min_free_kbytes 12288
 
 	# LKM
 	  chmod 666 /sys/module/lowmemorykiller/parameters/minfree
 	  chown root /sys/module/lowmemorykiller/parameters/minfree
-	  write /sys/module/lowmemorykiller/parameters/minfree 14175,18900,23625,51975,70875,75600
+	  write /sys/module/lowmemorykiller/parameters/minfree 18432,23040,27648,51256,89600,115200
+	  write /sys/module/lowmemorykiller/parameters/cost 32
+	  write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 128000
 
 	# Misc
 	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 0
@@ -435,12 +443,14 @@ on property:persist.spectrum.profile=2
 	  write /sys/block/mmcblk1/queue/add_random 1
 
 	# VM
-	  write /proc/sys/vm/dirty_ratio 70
-	  write /proc/sys/vm/dirty_background_ratio 3
+	  write /proc/sys/vm/dirty_ratio 90
+	  write /proc/sys/vm/dirty_background_ratio 70
 	  write /proc/sys/vm/leptop_mode 0
 	  write /proc/sys/vm/swappiness 40
-	  write /proc/sys/vm/dirty_writeback_centisecs 1000
-	  write /proc/sys/vm/dirty_expire_centisecs 300
+	  write /proc/sys/vm/dirty_writeback_centisecs 500
+	  write /proc/sys/vm/dirty_expire_centisecs 250
+          write /proc/sys/vm/vfs_cache_pressure 10
+	  write /proc/sys/vm/min_free_kbytes 6764
 	  write /proc/sys/vm/oom_kill_allocating_task 1
 	  write /proc/sys/vm/page-cluster 3
 	  write /proc/sys/vm/swap_ratio_enable 80
@@ -450,7 +460,9 @@ on property:persist.spectrum.profile=2
 	# LKM
 	  chmod 666 /sys/module/lowmemorykiller/parameters/minfree
 	  chown root /sys/module/lowmemorykiller/parameters/minfree
-	  write /sys/module/lowmemorykiller/parameters/minfree 14175,18900,23625,51975,70875,75600
+	  write /sys/module/lowmemorykiller/parameters/minfree 18432,23040,27648,32256,55296,80640
+	  write /sys/module/lowmemorykiller/parameters/cost 32
+	  write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 128000
 
 	# Misc
 	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 0
@@ -533,8 +545,8 @@ on property:persist.spectrum.profile=3
 	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 
 	/*lainnya*/
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive_pro
-	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive_pro
+	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor blu_active
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor blu_active
 	  chmod 644 /sys/module/workqueue/parameters/power_efficient
 	  write /sys/module/workqueue/parameters/power_efficient N
 	  write /sys/module/cpu_boost/parameters/input_boost_enabled 1
@@ -553,7 +565,7 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/msm_thermal/vdd_restriction/enabled 0
 	    
 	# GPU
-	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 550000000
+	  write /sys/class/kgsl/kgsl-3d0/max_gpuclk 500000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 320000000
 	  write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
@@ -561,11 +573,11 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold 7000
 	  write /sys/module/adreno_idler/parameters/adreno_idler_active 1
 	  write /sys/module/adreno_idler/parameters/adreno_idler_idleworkload 4000
-	  write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 15
+	  write /sys/module/adreno_idler/parameters/adreno_idler_idlewait 25
 	  write /sys/module/adreno_idler/parameters/adreno_idler_downdifferential 20
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/adrenoboost 2
 	  write /sys/kernel/gpu/gpu_min_clock 320
-	  write /sys/kernel/gpu/gpu_max_clock 550
+	  write /sys/kernel/gpu/gpu_max_clock 500
 	  write /sys/class/devfreq/1c00000.qcom,kgsl-3d0/device/kgsl/kgsl-3d0/default_pwrlevel 5
 
 	# I/O
@@ -584,12 +596,14 @@ on property:persist.spectrum.profile=3
 
 	# VM
 	  write /proc/sys/vm/dirty_ratio 10
-	  write /proc/sys/vm/dirty_background_ratio 3
-	  write /proc/sys/vm/dirty_writeback_centisecs 800
-	  write /proc/sys/vm/dirty_expire_centisecs 350
+	  write /proc/sys/vm/dirty_background_ratio 10
+	  write /proc/sys/vm/dirty_writeback_centisecs 500
+	  write /proc/sys/vm/dirty_expire_centisecs 100
 	  write /proc/sys/vm/oom_kill_allocating_task 1
 	  write /proc/sys/vm/laptop_mode 0
-	  write /proc/sys/vm/swappiness 100
+	  write /proc/sys/vm/swappiness 70
+          write /proc/sys/vm/vfs_cache_pressure 500
+	  write /proc/sys/vm/min_free_kbytes 8192
 	  write /proc/sys/vm/page-cluster 3
 	  write /proc/sys/vm/swap_ratio_enable 70
 	  write /proc/sys/vm/overcommit_ratio 25
@@ -598,7 +612,9 @@ on property:persist.spectrum.profile=3
 	# LKM
 	  chmod 666 /sys/module/lowmemorykiller/parameters/minfree
 	  chown root /sys/module/lowmemorykiller/parameters/minfree
-	  write /sys/module/lowmemorykiller/parameters/minfree 14175,18900,23625,51975,70875,75600
+	  write /sys/module/lowmemorykiller/parameters/minfree 18432,23040,27648,51256,150296,200640
+	  write /sys/module/lowmemorykiller/parameters/cost 16
+          write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 202640
 
 	# Misc
 	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 0
