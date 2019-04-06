@@ -28,7 +28,7 @@ if [ ! -e /sbin/busybox ];then
 fi;
 # Cleanup conflicts
 $BB rm -f /vendor/etc/init/init.spectrum.rc;
-#echo "[LuuvyKernel] Cleaned all Conflicts" | tee /dev/kmsg
+echo "[LuuvyKernel] Cleaned all Conflicts" | tee /dev/kmsg
 # create init.d folder if missing
 if [ ! -d /system/etc/init.d ]; then
 	mkdir -p /system/etc/init.d/
@@ -41,7 +41,7 @@ CRITICAL_PERM_FIX()
 {
 	# critical Permissions fix
 	$BB chown -R root:root /sbin;
-	#$BB chown -R root:root /luuvy;
+	$BB chown -R root:root /luuvy;
 	$BB chmod 06755 /luuvy/busybox;
 	$BB chmod 06755 /system/xbin/busybox;
 }
