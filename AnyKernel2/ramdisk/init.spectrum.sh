@@ -9,11 +9,11 @@ fi;
 
 #zram based of ram########################
 if [ $MEM_ALL -gt 3000000000 ]; then
-	ZRAM_SIZE=0;
+	ZRAM_SIZE=512MB;
 elif [ $MEM_ALL -lt 2900000000 ]; then
 	ZRAM_SIZE=1GB;
 else
-	ZRAM_SIZE=512MB;
+	ZRAM_SIZE=768MB;
 fi;
 
 if [ -e /dev/block/zram0 ]; then
