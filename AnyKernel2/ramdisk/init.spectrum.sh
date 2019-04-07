@@ -26,9 +26,7 @@ if [ ! -e /sbin/busybox ];then
 	$BB cp /luuvy/busybox /sbin/busybox;
 	$BB chmod 06755 /sbin/busybox;
 fi;
-# Cleanup conflicts
-$BB rm -f /vendor/etc/init/init.spectrum.rc;
-echo "[LuuvyKernel] Cleaned all Conflicts" | tee /dev/kmsg
+
 # create init.d folder if missing
 if [ ! -d /system/etc/init.d ]; then
 	mkdir -p /system/etc/init.d/
@@ -70,28 +68,30 @@ $BB chmod 0664 /sys/devices/system/cpu/$i/cpufreq/scaling_min_freq;
 $BB chmod 0444 /sys/devices/system/cpu/$i/cpufreq/cpuinfo_cur_freq;
 $BB chmod 0444 /sys/devices/system/cpu/$i/cpufreq/stats/*
 done;
+# Cleanup conflicts
+$BB rm -f /vendor/etc/init/init.spectrum.rc;
 #zram based of ram########################
-if [ $MEM_ALL -gt 3000000000 ]; then
-	ZRAM_SIZE=0;
-elif [ $MEM_ALL -lt 2900000000 ]; then
-	ZRAM_SIZE=1GB;
-else
-	ZRAM_SIZE=512MB;
-fi;
+#if [ $MEM_ALL -gt 3000000000 ]; then
+#	ZRAM_SIZE=0;
+#elif [ $MEM_ALL -lt 2900000000 ]; then
+#	ZRAM_SIZE=1GB;
+#else
+#	ZRAM_SIZE=512MB;
+#fi;
 
-if [ -e /dev/block/zram0 ]; then
-	if [ $MEM_ALL -gt 3000000000 ]; then
-		$BB swapoff /dev/block/zram0 >/dev/null 2>&1;
-		echo "1" > /sys/block/zram0/reset;
-	else
-		$BB swapoff /dev/block/zram0 >/dev/null 2>&1;
-		echo "1" > /sys/block/zram0/reset;
-		echo "lz4" > /sys/block/zram0/comp_algorithm;
-		echo $ZRAM_SIZE > /sys/block/zram0/disksize;
-		$BB mkswap /dev/block/zram0 >/dev/null;
-		$BB swapon /dev/block/zram0;
-	fi;
-fi;
+#if [ -e /dev/block/zram0 ]; then
+#	if [ $MEM_ALL -gt 3000000000 ]; then
+#		$BB swapoff /dev/block/zram0 >/dev/null 2>&1;
+#		echo "1" > /sys/block/zram0/reset;
+#	else
+#		$BB swapoff /dev/block/zram0 >/dev/null 2>&1;
+#		echo "1" > /sys/block/zram0/reset;
+#		echo "lz4" > /sys/block/zram0/comp_algorithm;
+#		echo $ZRAM_SIZE > /sys/block/zram0/disksize;
+#		$BB mkswap /dev/block/zram0 >/dev/null;
+#		$BB swapon /dev/block/zram0;
+#	fi;
+#fi;
 #################zram#########################
 # Miscellaneous configs
 echo -n disable > /sys/devices/soc/soc:qcom,bcl/mode;
