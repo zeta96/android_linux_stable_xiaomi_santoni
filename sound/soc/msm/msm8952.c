@@ -1898,18 +1898,15 @@ static void *def_msm8952_wcd_mbhc_cal(void)
 
 #if defined(CONFIG_C3N_SMB358) || defined(CONFIG_C3B_BQ2560X)
 #else
-extern char Spk_Pa_Flag[];
+extern bool Spk_Pa_Flag;
 
 static void Set_Spk_PA_Id(void)
 {
-	int ret = 0;
-
-	ret = strncmp(Spk_Pa_Flag, "S88537A12", 9);
-	if (ret == 0)  {
+	if (Spk_Pa_Flag)
 		Spk_Pa_Id = A12_AW8738_SPK_PA;
-	} else {
+	else
 		Spk_Pa_Id = A13_AW87319_SPK_PA;
-	}
+
 	pr_err("%s:Spk_Pa_Id =%d\n!", __func__, Spk_Pa_Id);
 }
 #endif
