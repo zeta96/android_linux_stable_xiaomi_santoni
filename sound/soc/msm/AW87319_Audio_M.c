@@ -63,10 +63,7 @@ struct pinctrl *aw87319ctrl = NULL;
 struct pinctrl_state *aw87319_rst_high = NULL;
 struct pinctrl_state *aw87319_rst_low = NULL;
 
-
-
-
-char Spk_Pa_Flag[] = " ";
+bool Spk_Pa_Flag = false;
 
 static void aw87319_pa_pwron(void)
 {
@@ -351,7 +348,7 @@ static int aw87319_i2c_probe(struct i2c_client *client, const struct i2c_device_
 	while(cnt > 0) {
 		I2C_write_reg(0x64, 0x2C);
 		reg_value = I2C_read_reg(0x00);
-		printk("AW87319 CHIPID=0x%2x\n", reg_value);
+		pr_debug("AW87319 CHIPID=0x%2x\n", reg_value);
 		if (reg_value == 0x9B) {
 			break;
 		}
@@ -361,6 +358,9 @@ static int aw87319_i2c_probe(struct i2c_client *client, const struct i2c_device_
 	if (!cnt) {
 		err = -ENODEV;
 		aw87319_hw_off();
+
+		Spk_Pa_Flag = true;
+
 		pr_err("%s:can not find AW87319, board  is S88537A12\n!", __func__);
 		goto exit_create_singlethread;
 	}
@@ -414,7 +414,7 @@ static int __init aw87319_pa_init(void)
 
 	ret = i2c_add_driver(&aw87319_i2c_driver);
 	if (ret) {
-		printk("****[%s] Unable to register driver (%d)\n", __func__, ret);
+		pr_debug("****[%s] Unable to register driver (%d)\n", __func__, ret);
 		return ret;
 	}
 	return 0;
