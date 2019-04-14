@@ -611,6 +611,11 @@ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
 KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
 KBUILD_CFLAGS += $(call cc-disable-warning, duplicate-decl-specifier)
 KBUILD_CFLAGS += $(call cc-disable-warning, pointer-bool-conversion)
+KBUILD_CFLAGS += $(call cc-disable-warning, format-truncation)
+KBUILD_CFLAGS += $(call cc-disable-warning, format-overflow)
+KBUILD_CFLAGS += $(call cc-disable-warning, int-in-bool-context)
+KBUILD_CFLAGS += $(call cc-disable-warning, attribute-alias)
+KBUILD_CFLAGS += $(call cc-disable-warning, unused-value)
 # Quiet clang warning: comparison of unsigned expression < 0 is always false
 KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
 # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
@@ -635,9 +640,35 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning,frame-address,)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
-KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
-KBUILD_CFLAGS	+= $(call cc-option,-fno-PIE)
-KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
+KBUILD_CFLAGS  += $(call cc-disable-warning, misleading-indentation)
+KBUILD_CFLAGS  += $(call cc-disable-warning, memset-elt-size)
+KBUILD_CFLAGS  += $(call cc-disable-warning, parentheses)
+KBUILD_CFLAGS  += $(call cc-disable-warning, bool-compare)
+KBUILD_CFLAGS  += $(call cc-disable-warning, bool-operation)
+KBUILD_CFLAGS += $(call cc-disable-warning, format-truncation)
+KBUILD_CFLAGS += $(call cc-disable-warning, format-overflow)
+KBUILD_CFLAGS += $(call cc-disable-warning, int-in-bool-context)
+KBUILD_CFLAGS += $(call cc-disable-warning, attribute-alias)
+KBUILD_CFLAGS  += $(call cc-disable-warning, duplicate-decl-specifier)
+KBUILD_CFLAGS  += $(call cc-disable-warning, switch-unreachable)
+KBUILD_CFLAGS  += $(call cc-disable-warning, array-bounds)
+KBUILD_CFLAGS  += $(call cc-disable-warning, stringop-overflow)
+KBUILD_CFLAGS  += $(call cc-disable-warning,incompatible-pointer-types)
+KBUILD_CFLAGS  += $(call cc-disable-warning,unused-function)
+
+# Kill all maybe-uninitialized warnings
+KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
+
+# Disable unused-constant-variable warnings
+KBUILD_CFLAGS   += $(call cc-disable-warning,unused-const-variable,)
+
+# Disable format-truncation warnings
+KBUILD_CFLAGS   += $(call cc-disable-warning,format-truncation,)
+
+# Needed to unbreak GCC 7.x and above
+KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
+
+
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= $(call cc-option,-Oz,-Os) $(call cc-disable-warning,maybe-uninitialized,)
