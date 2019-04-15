@@ -52,7 +52,7 @@ fi;
 # end ramdisk changes
 
 ####fix enforcing
-fix selinux denials for /init.*.sh
+#fix selinux denials for /init.*.sh
 
 "$bin/magiskpolicy" --load "/system/sepolicy" --save "$overlay/sepolicy" \
 
