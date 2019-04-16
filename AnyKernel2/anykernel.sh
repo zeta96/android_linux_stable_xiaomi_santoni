@@ -53,7 +53,7 @@ fi;
 
 ####fix enforcing
 #fix selinux denials for /init.*.sh
-"$bin/magiskpolicy" --load "/system/sepolicy" --save "$ramdisk/sepolicy" \
+"$bin/magiskpolicy" --load "/system/sepolicy" --save "sepolicy" \
 "allow init sysfs_devices_system_cpu file write" \
 "allow init rootfs file execute_no_trans" \
 "allow toolbox toolbox capability sys_admin" \
