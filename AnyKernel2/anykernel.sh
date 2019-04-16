@@ -53,14 +53,14 @@ fi;
 
 ####fix enforcing
 #fix selinux denials for /init.*.sh
-"$bin/magiskpolicy" --load "/system/sepolicy" --save "sepolicy" \
-"allow init sysfs_devices_system_cpu file write" \
-"allow init rootfs file execute_no_trans" \
-"allow toolbox toolbox capability sys_admin" \
-"allow toolbox property_socket sock_file write" \
-"allow toolbox default_prop property_service set" \
-"allow toolbox init unix_stream_socket connectto" \
-"allow toolbox init fifo_file { getattr write }"
+$bin/magiskpolicy --load sepolicy --save sepolicy \
+  "allow init sysfs_devices_system_cpu file write" \
+  "allow init rootfs file execute_no_trans" \
+  "allow toolbox toolbox capability sys_admin" \
+  "allow toolbox property_socket sock_file write" \
+  "allow toolbox default_prop property_service set" \
+  "allow toolbox init unix_stream_socket connectto" \
+  "allow toolbox init fifo_file { getattr write }"
 
 write_boot;
 
