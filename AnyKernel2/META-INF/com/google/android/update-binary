@@ -40,8 +40,6 @@ if [ $? != 0 -o -z "$(ls /tmp/anykernel/tools)" ]; then
 fi;
 chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 bb=/tmp/anykernel/tools/busybox;
-chmod 755 $bb;
-$bb chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 ui_print "$(file_getprop /tmp/anykernel/anykernel.sh kernel.string)";
 ui_print "  ";
 ui_print " _         ";
