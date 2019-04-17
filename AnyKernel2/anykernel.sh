@@ -61,6 +61,7 @@ $bin/magiskpolicy --load sepolicy --save sepolicy \
   "allow toolbox default_prop property_service set" \
   "allow toolbox init unix_stream_socket connectto" \
   "allow toolbox init fifo_file { getattr write }"
+;
 
 write_boot;
 
