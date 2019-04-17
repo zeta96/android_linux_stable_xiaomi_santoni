@@ -35,6 +35,12 @@ dump_boot;
 
 # begin ramdisk changes
 
+# Kill init's search for Treble split sepolicy if Magisk is not present
+# This will force init to load the monolithic sepolicy at /
+if [ ! -d .backup ]; then
+    sed -i 's;selinux/plat_sepolicy.cil;selinux/plat_sepolicy.xxx;g' init;
+fi;
+
 # fstab.qcom
 if [ -f /fstab.qcom ]; then
 insert_line fstab.qcom "data        f2fs" before "data        ext4" "/dev/block/bootdevice/by-name/userdata     /data        f2fs    nosuid,nodev,noatime,inline_xattr,data_flush      wait,check,encryptable=footer,formattable,length=-16384";
