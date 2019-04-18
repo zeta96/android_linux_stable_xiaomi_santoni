@@ -39,9 +39,6 @@ dump_boot;
 # This will force init to load the monolithic sepolicy at /
 if [ ! -d .backup ]; then
     sed -i 's;selinux/plat_sepolicy.cil;selinux/plat_sepolicy.xxx;g' init;
-    $bin/magiskpolicy --compile-split --save sepolicy \
-    "allow init rootfs file execute_no_trans" \
-    ;
 fi;
 
 # fstab.qcom
