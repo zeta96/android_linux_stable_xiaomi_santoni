@@ -61,7 +61,7 @@ cleanup;
 mkdir -p /tmp/anykernel/bin;
 cd /tmp/anykernel;
 unzip -o "$ZIP";
-if [ $? != 0 -o -z "$(ls /tmp/anykernel/tools)" ]; then
+if [ $? != 0 -o -z "$(ls tools)" ]; then
   abort "Unzip failed. Aborting...";
 fi;
 bb=/tmp/anykernel/tools/busybox;
