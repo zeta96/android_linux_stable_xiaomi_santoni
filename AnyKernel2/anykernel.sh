@@ -38,16 +38,46 @@ dump_boot;
 # begin ramdisk changes
 
 # fstab.qcom
-if [ -f /fstab.qcom ]; then
+# fstab.qcom
+if [ -e fstab.qcom ]; then
+	fstab=fstab.qcom;
+elif [ -e /system/vendor/etc/fstab.qcom ]; then
+	fstab=/system/vendor/etc/fstab.qcom;
+elif [ -e /system/etc/fstab.qcom ]; then
+	fstab=/system/etc/fstab.qcom;
+fi;
+
+if [ "$(file_getprop $script do.f2fs_patch)" == 1 ]; then
+if [ $(mount | grep f2fs | wc -l) -gt "0" ] &&
+   [ $(cat $fstab | grep f2fs | wc -l) -eq "0" ]; then
+ui_print " "; ui_print "Found fstab: $fstab";
+ui_print "- Adding f2fs support to fstab...";
+
 insert_line fstab.qcom "data        f2fs" before "data        ext4" "/dev/block/bootdevice/by-name/userdata     /data        f2fs    nosuid,nodev,noatime,inline_xattr,data_flush      wait,check,encryptable=footer,formattable,length=-16384";
 insert_line fstab.qcom "cache        f2fs" after "data        ext4" "/dev/block/bootdevice/by-name/cache     /cache        f2fs    nosuid,nodev,noatime,inline_xattr,flush_merge,data_flush wait,formattable,check";
+
+if [ $(cat $fstab | grep f2fs | wc -l) -eq "0" ]; then
+		ui_print "- Failed to add f2fs support!";
+		exit 1;
+	fi;
+elif [ $(mount | grep f2fs | wc -l) -gt "0" ] &&
+     [ $(cat $fstab | grep f2fs | wc -l) -gt "0" ]; then
+	ui_print " "; ui_print "Found fstab: $fstab";
+	ui_print "- F2FS supported!";
 fi;
+fi; #f2fs_patch
 
 #Spectrum
 if [ -e init.qcom.rc ]; then
+if [ -e init.qcom.rc~ ]; then
+	cp init.qcom.rc~ init.qcom.rc;
+fi;
 backup_file init.qcom.rc;
 insert_line init.qcom.rc "init.spectrum.rc" before "import init.qcom.usb.rc" "import /init.spectrum.rc";
 else
+if [ -e init.rc~ ]; then
+	cp init.rc~ init.rc;
+fi;
 backup_file init.rc;
 insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /init.spectrum.rc";
 fi;
