@@ -67,19 +67,35 @@ elif [ $(mount | grep f2fs | wc -l) -gt "0" ] &&
 fi;
 fi; #f2fs_patch
 
+
+mount -o rw,remount -t auto /system >/dev/null;
+# Clean up other kernels' ramdisk overlay files
+rm -rf /system/vendor/etc/init/init.spectrum.rc;
+rm -rf /system/vendor/etc/init/hw/init.spectrum.rc;
+rm -rf /init.spectrum.rc;
+
 #Spectrum
-if [ -e init.qcom.rc ]; then
+if [ -e /system/vendor/etc/init/hw/init.qcom.rc ]; then
 if [ -e init.qcom.rc~ ]; then
-	cp init.qcom.rc~ init.qcom.rc;
+	cp /system/vendor/etc/init/hw/init.qcom.rc~ /system/vendor/etc/init/hw/init.qcom.rc;
 fi;
-backup_file init.qcom.rc;
-insert_line init.qcom.rc "init.spectrum.rc" before "import init.qcom.usb.rc" "import /init.spectrum.rc";
+backup_file /system/vendor/etc/init/hw/init.qcom.rc;
+insert_line /system/vendor/etc/init/hw/init.qcom.rc "init.spectrum.rc" before "import init.qcom.usb.rc" "import /system/vendor/etc/init/init.spectrum.rc";
 else
 if [ -e init.rc~ ]; then
-	cp init.rc~ init.rc;
+	cp init.rc~ init.rc;	
 fi;
 backup_file init.rc;
-insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /init.spectrum.rc";
+insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /system/vendor/etc/init/init.spectrum.rc";
+fi;
+mount -o remount,ro /system;
+
+# Add skip_override parameter to cmdline so user doesn't have to reflash Magisk
+if [ -d $ramdisk/.subackup -o -d $ramdisk/.backup ]; then
+  ui_print " "; ui_print "Magisk detected! Patching cmdline so reflashing Magisk is not necessary...";
+  patch_cmdline "skip_override" "skip_override";
+else
+  patch_cmdline "skip_override" "";
 fi;
 
 # If the kernel image and dtbs are separated in the zip
