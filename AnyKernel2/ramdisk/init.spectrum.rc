@@ -20,7 +20,7 @@ on init
     write /sys/block/zram0/reset 1
     write /sys/block/zram0/comp_algorithm lz4
     write /sys/block/zram0/disksize 536870912
-    write /sys/block/zram0/max_comp_streams 8
+    write /sys/block/zram0/max_comp_streams 1
 
 on post-fs
     exec u:r:init:s0 -- /system/bin/mkswap /dev/block/zram0
@@ -34,8 +34,8 @@ on post-fs
     
 on property:sys.boot_completed=1
    # Set default profile on first boot
-   exec u:r:init:s0 root root -- /init.spectrum.sh
-   exec u:r:su:s0 root root -- /init.spectrum.sh
+   exec u:r:init:s0 root root -- /system/etc/init/init.spectrum.sh
+   exec u:r:su:s0 root root -- /system/etc/init/init.spectrum.sh
    # Enable Spectrum support
    setprop spectrum.support 1
    # Add kernel name
@@ -116,13 +116,13 @@ on property:persist.spectrum.profile=0
 	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor electron
 	  chmod 644 /sys/module/workqueue/parameters/power_efficient
 	  write /sys/module/workqueue/parameters/power_efficient y
-	  write /sys/module/cpu_boost/parameters/input_boost_enabled 1
+	  write /sys/module/cpu_boost/parameters/input_boost_enabled 0
 	  write /sys/module/cpu_boost/parameters/input_boost_ms 1500
-	  write /sys/module/cpu_boost/parameters/input_boost_freq 0:14010000
+	  write /sys/module/cpu_boost/parameters/input_boost_freq 0:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 1:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 2:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 3:0
-	  write /sys/module/cpu_boost/parameters/input_boost_freq 4:1094400
+	  write /sys/module/cpu_boost/parameters/input_boost_freq 4:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 5:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 6:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 7:0
@@ -647,11 +647,11 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/cpu_boost/parameters/input_boost_ms 1500
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 0:1401000
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 1:0
-	  write /sys/module/cpu_boost/parameters/input_boost_freq 2:1401000
+	  write /sys/module/cpu_boost/parameters/input_boost_freq 2:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 3:0
-	  write /sys/module/cpu_boost/parameters/input_boost_freq 4:1094400
+	  write /sys/module/cpu_boost/parameters/input_boost_freq 4:902400
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 5:0
-	  write /sys/module/cpu_boost/parameters/input_boost_freq 6:1094400
+	  write /sys/module/cpu_boost/parameters/input_boost_freq 6:902400
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 7:0
 
 	# HOTPLUG
