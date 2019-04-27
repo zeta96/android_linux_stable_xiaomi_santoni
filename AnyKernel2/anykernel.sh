@@ -28,7 +28,12 @@ ramdisk_compression=auto;
 
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
-chmod -R 750 $ramdisk/*;
+mount vendor;
+mount -o remount,rw /vendor;
+mount system;
+mount -o remount,rw /system;
+chmod -R 755 $ramdisk
+chmod -R 755 $ramdisk/*;
 chown -R root:root $ramdisk/*;
 
 
@@ -73,7 +78,7 @@ remove_file /system/vendor/etc/init/init.spectrum.rc;
 remove_file /system/vendor/etc/init/init.spectrum.sh;
 remove_file /system/vendor/etc/init/hw/init.spectrum.rc;
 remove_file /system/vendor/etc/init/hw/init.spectrum.sh;
-remove_file/init.spectrum.rc;
+remove_file /init.spectrum.rc;
 remove_file /init.spectrum.sh;
 
 #Spectrum========================================
@@ -83,10 +88,10 @@ remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/ini
 
 backup_file /system/vendor/etc/init/hw/init.qcom.rc;
 
-cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc;
-chmod 644 /system/vendor/etc/init/init.spectrum.rc;
-cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh;
-chmod 644 /system/vendor/etc/init/init.spectrum.sh;
+cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc
+chmod 644 /system/vendor/etc/init/init.spectrum.rc
+cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh
+chmod 644 /system/vendor/etc/init/init.spectrum.sh
 
 
 remove_line init.rc "import /init.spectrum.rc";
@@ -95,10 +100,10 @@ remove_line init.rc "import /vendor/etc/init/init.spectrum.rc";
 
 backup_file init.rc;
 
-cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc;
-chmod 644 /system/vendor/etc/init/init.spectrum.rc;
-cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh;
-chmod 644 /system/vendor/etc/init/init.spectrum.sh;
+cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc
+chmod 644 /system/vendor/etc/init/init.spectrum.rc
+cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh
+chmod 644 /system/vendor/etc/init/init.spectrum.sh
 
 insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
 
