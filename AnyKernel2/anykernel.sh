@@ -68,52 +68,26 @@ fi;
 fi; #f2fs_patch
 
 
-mount -o rw,remount -t auto /system >/dev/null;
 # Clean up other kernels' ramdisk files
-rm -rf /system/vendor/etc/init/init.spectrum.rc;
-rm -rf /system/vendor/etc/init/init.spectrum.sh;
-rm -rf /system/vendor/etc/init/hw/init.spectrum.rc;
-rm -rf /system/vendor/etc/init/hw/init.spectrum.sh;
-rm -rf /init.spectrum.rc;
-rm -rf /init.spectrum.sh;
+remove_file /system/vendor/etc/init/init.spectrum.rc;
+remove_file /system/vendor/etc/init/init.spectrum.sh;
+remove_file /system/vendor/etc/init/hw/init.spectrum.rc;
+remove_file /system/vendor/etc/init/hw/init.spectrum.sh;
+remove_file/init.spectrum.rc;
+remove_file /init.spectrum.sh;
 
-#Spectrum===========================================
-if [ -e /system/vendor/etc/init/hw/init.qcom.rc~ ]; then
-if [ -e /system/vendor/etc/init/hw/init.qcom.rc ]; then
-	cp /system/vendor/etc/init/hw/init.qcom.rc~ /system/vendor/etc/init/hw/init.qcom.rc;
-fi;
-
+#Spectrum========================================
 remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
 remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
 remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
 
 backup_file /system/vendor/etc/init/hw/init.qcom.rc;
 
-cp $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc;
+cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc;
 chmod 644 /system/vendor/etc/init/init.spectrum.rc;
-cp $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh;
+cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh;
 chmod 644 /system/vendor/etc/init/init.spectrum.sh;
 
-insert_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc" before "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
-	# fix selinux denials for /init.*.sh
-		$bin/magiskpolicy --load sepolicy --save $ramdisk/sepolicy \
-		  "allow init rootfs file execute_no_trans" \
-		  "allow init sysfs_devices_system_cpu file write" \
-		  "allow init sysfs_msms_perf file write" \
-		  "allow init proc file { open write }" \
-		  "allow init sysfs file" \
-		  "allow init sysfs_graphics file { open write }" \
-		  "allow toolbox toolbox capability sys_admin" \
-		  "allow toolbox property_socket sock_file write" \
-		  "allow toolbox default_prop property_service set" \
-		  "allow toolbox init unix_stream_socket connectto" \
-		  "allow toolbox init fifo_file { getattr write }" && \
-		  { cat "$ramdisk/sepolicy" > sepolicy; }
-		  
-else
-if [ -e init.rc~ ]; then
-	cp init.rc~ init.rc;	
-fi;
 
 remove_line init.rc "import /init.spectrum.rc";
 remove_line init.rc "import /vendor/etc/init/hw/init.spectrum.rc";
@@ -121,12 +95,12 @@ remove_line init.rc "import /vendor/etc/init/init.spectrum.rc";
 
 backup_file init.rc;
 
-cp $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc;
+cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc;
 chmod 644 /system/vendor/etc/init/init.spectrum.rc;
-cp $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh;
+cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh;
 chmod 644 /system/vendor/etc/init/init.spectrum.sh;
 
-insert_line init.rc "import /vendor/etc/init/init.spectrum.rc" before "import /init.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
 
 	# fix selinux denials for /init.*.sh
 	$bin/magiskpolicy --load sepolicy --save $ramdisk/sepolicy \
@@ -142,13 +116,12 @@ insert_line init.rc "import /vendor/etc/init/init.spectrum.rc" before "import /i
 	  "allow toolbox init unix_stream_socket connectto" \
 	  "allow toolbox init fifo_file { getattr write }" && \
 	  { cat "$ramdisk/sepolicy" > sepolicy; }
-fi;
 
-rm -rf /system/vendor/etc/init/hw/init.spectrum.rc;
-rm -rf /system/vendor/etc/init/hw/init.spectrum.sh;
-rm -rf /init.spectrum.rc;
-rm -rf /init.spectrum.sh;
-mount -o remount,ro /system;
+
+remove_file /system/vendor/etc/init/hw/init.spectrum.rc;
+remove_file /system/vendor/etc/init/hw/init.spectrum.sh;
+remove_file /init.spectrum.rc;
+remove_file /init.spectrum.sh;
 
 # Add skip_override parameter to cmdline so user doesn't have to reflash Magisk
 if [ -d $ramdisk/.subackup -o -d $ramdisk/.backup ]; then
