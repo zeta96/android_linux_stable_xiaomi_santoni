@@ -74,39 +74,56 @@ fi;
 fi; #f2fs_patch
 
 
-# Clean up other kernels' ramdisk files
+# Clean up other kernels' ramdisk files before installing ramdisk
 rm -rf /system/vendor/etc/init/init.spectrum.rc
 rm -rf /system/vendor/etc/init/init.spectrum.sh
 rm -rf /system/vendor/etc/init/hw/init.spectrum.rc
 rm -rf /system/vendor/etc/init/hw/init.spectrum.sh
+rm -rf /system/etc/init/init.spectrum.rc
+rm -rf /system/etc/init/init.spectrum.sh
 rm -rf /init.spectrum.rc
 rm -rf /init.spectrum.sh
 
 #Spectrum========================================
-remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
-remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
-remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
-
-backup_file /system/vendor/etc/init/hw/init.qcom.rc;
-
 cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc
 chmod 644 /system/vendor/etc/init/init.spectrum.rc
 cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh
 chmod 644 /system/vendor/etc/init/init.spectrum.sh
-
-
-remove_line init.rc "import /init.spectrum.rc";
-remove_line init.rc "import /vendor/etc/init/hw/init.spectrum.rc";
-remove_line init.rc "import /vendor/etc/init/init.spectrum.rc";
-
-backup_file init.rc;
-
-cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc
-chmod 644 /system/vendor/etc/init/init.spectrum.rc
-cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh
-chmod 644 /system/vendor/etc/init/init.spectrum.sh
-
-insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+#spectrum write init.rc only
+if [ -e init.rc~ ]; then
+	cp -rpf init.rc~ init.rc
+	if [ -e init.rc ]; then	
+	
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /system/etc/init/init.spectrum.rc";
+		backup_file /system/vendor/etc/init/hw/init.qcom.rc;
+		
+		remove_line init.rc "import /init.spectrum.rc";
+		remove_line init.rc "import /vendor/etc/init/hw/init.spectrum.rc";
+		remove_line init.rc "import /vendor/etc/init/init.spectrum.rc";
+		remove_line init.rc "import /system/etc/init/init.spectrum.rc";
+		backup_file init.rc;
+		insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+		###experiment if this works
+		insert_line /system/vendor/etc/init/hw/init.qcom.rc "init.spectrum.rc" before "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+		######
+	fi;
+	else
+		if [ -e /system/vendor/etc/init/hw/init.qcom.rc~ ]; then
+			cp -rpf /system/vendor/etc/init/hw/init.qcom.rc~  /system/vendor/etc/init/hw/init.qcom.rc
+			if [ -e /system/vendor/etc/init/hw/init.qcom.rc ]; then
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
+				remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /system/etc/init/init.spectrum.rc";
+				backup_file /system/vendor/etc/init/hw/init.qcom.rc;
+				insert_line /system/vendor/etc/init/hw/init.qcom.rc "init.spectrum.rc" before "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/init.spectrum.rc";
+			fi;
+		fi;
+fi;
+#Spectrum========================================
 
 	# fix selinux denials for /init.*.sh
 	$bin/magiskpolicy --load sepolicy --save $ramdisk/sepolicy \
@@ -123,9 +140,11 @@ insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /ven
 	  "allow toolbox init fifo_file { getattr write }" && \
 	  { cat "$ramdisk/sepolicy" > sepolicy; }
 
-
+#remove other file spectrum if any
 rm -rf /system/vendor/etc/init/hw/init.spectrum.rc
 rm -rf /system/vendor/etc/init/hw/init.spectrum.sh
+rm -rf /system/etc/init/init.spectrum.rc
+rm -rf /system/etc/init/init.spectrum.sh
 rm -rf /init.spectrum.rc
 rm -rf /init.spectrum.sh
 
