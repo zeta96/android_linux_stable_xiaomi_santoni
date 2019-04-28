@@ -33,8 +33,8 @@ mount system;
 mount -o remount,rw /;
 mount -o remount,rw /vendor;
 mount -o remount,rw /system;
-chmod -R 755 $ramdisk
-chmod -R 755 $ramdisk/*;
+chmod -R 750 $ramdisk
+chmod -R 750 $ramdisk/*;
 chown -R root:root $ramdisk/*;
 
 
@@ -83,27 +83,32 @@ rm -rf /system/etc/init/init.spectrum.rc
 rm -rf /system/etc/init/init.spectrum.sh
 rm -rf /init.spectrum.rc
 rm -rf /init.spectrum.sh
+rm -rf /init.performance_profiles.rc
+rm -rf /sbin/spa
+rm -rf /system/storage/emulated/0/Spectrum/profiles/
+rm -rf /data/media/0/Spectrum/profiles/
+rm -rf /storage/emulated/0/Spectrum/profiles/
+rm -rf /storage/emulated/0/Spectrum/profiles/balance.profile
+rm -rf /storage/emulated/0/Spectrum/profiles/battery.profile
+rm -rf /storage/emulated/0/Spectrum/profiles/gaming.profile
+rm -rf /storage/emulated/0/Spectrum/profiles/performance.profile
 
 #Spectrum========================================
 cp -rpf $ramdisk/init.spectrum.rc /system/vendor/etc/init/init.spectrum.rc
 chmod 644 /system/vendor/etc/init/init.spectrum.rc
 cp -rpf $ramdisk/init.spectrum.sh /system/vendor/etc/init/init.spectrum.sh
 chmod 644 /system/vendor/etc/init/init.spectrum.sh
-#spectrum write init.rc only
+#spectrum write init.rc only##############################
 if [ -e init.rc~ ]; then
-	cp -rpf init.rc~ init.rc
-	###test
-	cp -rpf /system/vendor/etc/init/hw/init.qcom.rc~  /system/vendor/etc/init/hw/init.qcom.rc
-	###
-	if [ -e init.rc ]; then	
-	#test
-		#remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
-		####
+	cp -rpf init.rc~ init.rc	
+	if [ -e init.rc ]; then		
+		####for init.qcom.rc
+		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";		
 		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/hw/init.spectrum.rc";
 		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /vendor/etc/init/init.spectrum.rc";
 		remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /system/etc/init/init.spectrum.rc";
 		backup_file /system/vendor/etc/init/hw/init.qcom.rc;
-		
+		#for init.rc
 		remove_line init.rc "import /init.spectrum.rc";
 		remove_line init.rc "import /vendor/etc/init/hw/init.spectrum.rc";
 		remove_line init.rc "import /vendor/etc/init/init.spectrum.rc";
