@@ -29,8 +29,9 @@ ramdisk_compression=auto;
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
 mount vendor;
-mount -o remount,rw /vendor;
 mount system;
+mount -o remount,rw /;
+mount -o remount,rw /vendor;
 mount -o remount,rw /system;
 chmod -R 755 $ramdisk
 chmod -R 755 $ramdisk/*;
@@ -74,12 +75,12 @@ fi; #f2fs_patch
 
 
 # Clean up other kernels' ramdisk files
-remove_file /system/vendor/etc/init/init.spectrum.rc;
-remove_file /system/vendor/etc/init/init.spectrum.sh;
-remove_file /system/vendor/etc/init/hw/init.spectrum.rc;
-remove_file /system/vendor/etc/init/hw/init.spectrum.sh;
-remove_file /init.spectrum.rc;
-remove_file /init.spectrum.sh;
+rm -rf /system/vendor/etc/init/init.spectrum.rc
+rm -rf /system/vendor/etc/init/init.spectrum.sh
+rm -rf /system/vendor/etc/init/hw/init.spectrum.rc
+rm -rf /system/vendor/etc/init/hw/init.spectrum.sh
+rm -rf /init.spectrum.rc
+rm -rf /init.spectrum.sh
 
 #Spectrum========================================
 remove_line /system/vendor/etc/init/hw/init.qcom.rc "import /init.spectrum.rc";
@@ -123,10 +124,10 @@ insert_line init.rc "init.spectrum.rc" before "import /init.usb.rc" "import /ven
 	  { cat "$ramdisk/sepolicy" > sepolicy; }
 
 
-remove_file /system/vendor/etc/init/hw/init.spectrum.rc;
-remove_file /system/vendor/etc/init/hw/init.spectrum.sh;
-remove_file /init.spectrum.rc;
-remove_file /init.spectrum.sh;
+rm -rf /system/vendor/etc/init/hw/init.spectrum.rc
+rm -rf /system/vendor/etc/init/hw/init.spectrum.sh
+rm -rf /init.spectrum.rc
+rm -rf /init.spectrum.sh
 
 # Add skip_override parameter to cmdline so user doesn't have to reflash Magisk
 if [ -d $ramdisk/.subackup -o -d $ramdisk/.backup ]; then
