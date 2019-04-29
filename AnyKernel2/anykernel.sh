@@ -33,6 +33,9 @@ mount system;
 mount -o remount,rw /;
 mount -o remount,rw /vendor;
 mount -o remount,rw /system;
+mount -o remount,rw /sbin;
+mount -o remount,rw /data;
+mount -o remount,rw /storage;
 chmod -R 750 $ramdisk
 chmod -R 750 $ramdisk/*;
 chown -R root:root $ramdisk/*;
@@ -73,7 +76,6 @@ elif [ $(mount | grep f2fs | wc -l) -gt "0" ] &&
 fi;
 fi; #f2fs_patch
 
-
 # Clean up other kernels' ramdisk files before installing ramdisk
 rm -rf /system/vendor/etc/init/init.spectrum.rc
 rm -rf /system/vendor/etc/init/init.spectrum.sh
@@ -87,7 +89,13 @@ rm -rf /init.performance_profiles.rc
 rm -rf /sbin/spa
 rm -rf /system/storage/emulated/0/Spectrum/profiles/
 rm -rf /data/media/0/Spectrum/profiles/
+rm -rf /data/media/0/Spectrum/Profiles/
+rm -rf /data/media/0/spectrum/
+rm -rf /data/media/0/Spectrum/
+rm -rf /storage/emulated/0/spectrum/
+rm -rf /storage/emulated/0/Spectrum/
 rm -rf /storage/emulated/0/Spectrum/profiles/
+rm -rf /storage/emulated/0/Spectrum/Profiles/
 rm -rf /storage/emulated/0/Spectrum/profiles/balance.profile
 rm -rf /storage/emulated/0/Spectrum/profiles/battery.profile
 rm -rf /storage/emulated/0/Spectrum/profiles/gaming.profile
