@@ -117,6 +117,41 @@ on property:persist.spectrum.profile=0
 	/*lainnya*/
 	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor electron
 	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor electron
+
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/above_hispeed_delay 20000 1094400:39000 
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/align_windows 1
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/boost 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/boostpulse_duration 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/go_hispeed_load 85
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/hispeed_freq 1094400
+		write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/max_freq_hysteresis 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/min_sample_time 80000 
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/powersave_bias 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/screen_off_maxfreq 960000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/target_loads 1 960000:85 1094400:90 1344000:80
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/timer_rate 20000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/timer_slack 80000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/use_migration_notif 1
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/use_sched_load 1
+
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/above_hispeed_delay 39000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/align_windows 1
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/boost 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/boostpulse_duration 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/go_hispeed_load 90
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/hispeed_freq 768000
+		write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/max_freq_hysteresis 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/min_sample_time 80000 
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/powersave_bias 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/screen_off_maxfreq 768000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/target_loads 1 768000:90
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/timer_rate 20000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/timer_slack 80000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/use_migration_notif 1
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/use_sched_load 1
+
 	  chmod 644 /sys/module/workqueue/parameters/power_efficient
 	  write /sys/module/workqueue/parameters/power_efficient y
 	  write /sys/module/cpu_boost/parameters/input_boost_enabled 0
@@ -466,8 +501,43 @@ on property:persist.spectrum.profile=2
 	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 
 	/*lainnya*/
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor Alessa
-	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor xperience
+	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor electron
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor electron
+
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/above_hispeed_delay 20000 1094400:20000 1209600:20000 1401000:39000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/align_windows 1
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/boost 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/boostpulse_duration 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/go_hispeed_load 99
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/hispeed_freq 1094400
+		write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 0
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/max_freq_hysteresis 10000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/min_sample_time 80000 
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/powersave_bias 1
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/screen_off_maxfreq 960000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/target_loads 80 1248000:90 1344000:80 1401000:95
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/timer_rate 20000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/timer_slack 80000
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/use_migration_notif 1
+		write /sys/devices/system/cpu/cpu0/cpufreq/electron/use_sched_load 1
+
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/above_hispeed_delay 20000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/align_windows 1
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/boost 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/boostpulse_duration 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/go_hispeed_load 99
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/hispeed_freq 768000
+		write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 0
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/max_freq_hysteresis 10000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/min_sample_time 80000 
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/powersave_bias 1
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/screen_off_maxfreq 768000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/target_loads 80
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/timer_rate 20000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/timer_slack 80000
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/use_migration_notif 1
+		write /sys/devices/system/cpu/cpu4/cpufreq/electron/use_sched_load 1
+
 	  chmod 644 /sys/module/workqueue/parameters/power_efficient
 	  write /sys/module/workqueue/parameters/power_efficient Y
 	  write /sys/module/cpu_boost/parameters/input_boost_enabled 0
@@ -652,7 +722,7 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 1:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 2:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 3:0
-	  write /sys/module/cpu_boost/parameters/input_boost_freq 4:902400
+	  write /sys/module/cpu_boost/parameters/input_boost_freq 4:1094400
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 5:0
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 6:902400
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 7:0
