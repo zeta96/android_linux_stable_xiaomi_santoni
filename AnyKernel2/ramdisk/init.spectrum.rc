@@ -174,7 +174,7 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/msm_hotplug/boost_lock_duration 2500
 	  write /sys/module/msm_hotplug/max_cpus_online_susp 2
 	  write /sys/module/msm_hotplug/cpus_boosted 3
-	  write /sys/module/msm_hotplug/min_cpus_online 1
+	  write /sys/module/msm_hotplug/min_cpus_online 3
 	  write /sys/module/msm_hotplug/max_cpus_online 8
 	  write /sys/module/msm_hotplug/update_rates 60
 	  write /sys/module/msm_hotplug/io_is_busy 0
