@@ -18,5 +18,5 @@ blocks:
           - bash kernel.sh 
       - name: Compile Kernol GCC
         commands:
-          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohgcc8.sh --output kernel.sh
-	        - bash kernel.sh 
+	  - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohgcc8.sh --output kernel2.sh
+          - bash kernel2.sh 
