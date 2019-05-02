@@ -1,5 +1,5 @@
 version: v1.0
-name: CookingLoopyKernel
+name: CookingLoopyKarnul
 agent:
   machine:
     type: e1-standard-4
@@ -7,10 +7,16 @@ agent:
 blocks:
   - name: "Build"
     task:
-      jobs:
-      - name: Compile Kernol dragontc
+      prologue:
         commands:
           - checkout
           - install-package bc build-essential zip curl libstdc++6
-          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/semaphoredtc9 --output kernel.sh
-          - bash kernel.sh
+      jobs:
+      - name: Compile Kernol dragontc
+        commands:
+          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohdragontc9.sh --output kernel.sh
+          - bash kernel.sh 
+      - name: Compile Kernol GCC
+        commands:
+          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohgcc8.sh --output kernel.sh
+	        - bash kernel.sh 
