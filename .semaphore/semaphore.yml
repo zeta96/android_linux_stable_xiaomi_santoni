@@ -19,4 +19,4 @@ blocks:
           - checkout
           - install-package bc build-essential zip curl libstdc++6
           - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohgcc8.sh --output kernel.sh
-	        - bash kernel.sh 
+	  - bash kernel.sh 
