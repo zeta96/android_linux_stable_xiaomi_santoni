@@ -5,18 +5,18 @@ agent:
     type: e1-standard-4
     os_image: ubuntu1804
 blocks:
-  - name: "Build"
-    task:
-      prologue:
-        commands:
-          - checkout
-          - install-package bc build-essential zip curl libstdc++6
+  - name: "Build1"
+    task:          
       jobs:
       - name: Compile Kernol dragontc
         commands:
-          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohdragontc9.sh --output kernel.sh
-          - bash kernel.sh 
+	  - checkout
+          - install-package bc build-essential zip curl libstdc++6
+          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/semaphoredtc9 --output kernel.sh
+          - bash kernel.sh 	
       - name: Compile Kernol GCC
         commands:
-	  - curl https://raw.githubusercontent.com/zeta96/kernelci/master/contohgcc8.sh --output kernel2.sh
-          - bash kernel2.sh 
+	  - checkout
+          - install-package bc build-essential zip curl libstdc++6
+	  - wget https://raw.githubusercontent.com/zeta96/kernelci/master/semaphoregcc8 
+          - bash ksemaphoregcc8 
