@@ -24,5 +24,3 @@ blocks:
         commands:
           - checkout
           - install-package bc build-essential zip curl libstdc++6
-	  - wget https://raw.githubusercontent.com/zeta96/kernelci/master/semaphoregcc8 
-          - bash ksemaphoregcc8 
