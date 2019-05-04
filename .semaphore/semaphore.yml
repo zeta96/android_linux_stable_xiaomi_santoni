@@ -10,6 +10,7 @@ blocks:
       prologue:
         commands:
           - checkout
+          - install-package bc build-essential zip curl libstdc++6
       jobs:
         # these two jobs run in parallel, if "Unit tests" block passes:
         # (also, comments are ok ;)
