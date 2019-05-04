@@ -2,14 +2,11 @@ version: v1.0
 name: First pipeline example
 agent:
   machine:
-    type: e1-standard-2
+    type: e1-standard-4
     os_image: ubuntu1804
 blocks:
   - name: "Build"
     task:
-      env_vars:
-        - name: APP_ENV
-          value: prod
       prologue:
         commands:
           - checkout
@@ -22,6 +19,22 @@ blocks:
         - name: "Integration tests"
           commands:
             - bash kernel.sh
+            
+ blocks:
+  - name: "Jobs2"
+    task:
+      env_vars:
+        - name: APP_ENV
+          value: prod
+      prologue:
+        commands:
+          - checkout
+          - install-package bc build-essential zip curl libstdc++6
+          - curl https://raw.githubusercontent.com/zeta96/kernelci/master/semaphoregcc8  --output kernel2.sh
+       jobs:
+        # these two jobs run in parallel, if "Unit tests" block passes:
+        # (also, comments are ok ;)
         - name: "Performance tests"
           commands:
             - bash kernel2.sh
+
