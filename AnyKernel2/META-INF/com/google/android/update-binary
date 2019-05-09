@@ -134,9 +134,11 @@ if [ "$(file_getprop anykernel.sh do.devicecheck)" == 1 ]; then
   fi;
   ui_print "Checking for Project Treble...";
   if [ "$(file_getprop /system/build.prop ro.treble.enabled)" == "true" ]; then
-    ui_print "Treble Status: Supported";    
+    ui_print "Treble Status: Supported";
+    dtb=/tmp/anykernel/treble;
   else
-    ui_print "Treble Status: Not supported";    
+    ui_print "Treble Status: Not supported";
+    dtb=/tmp/anykernel/nontreble;
   fi;
 fi;
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.system)" == 1 ]; then
@@ -206,6 +208,10 @@ for i in $($bb --list); do
 done;
 if [ $? != 0 -o -z "$(ls bin)" ]; then
   abort "Recovery busybox setup failed. Aborting...";
+fi;
+cat /tmp/anykernel/kernel/Image.gz $dtb/*.dtb > /tmp/anykernel/Image.gz-dtb;
+if [ $? != "0" ]; then
+  abort "DTB append failed. Aborting...";
 fi;
 PATH="/tmp/anykernel/bin:$PATH" $bb ash anykernel.sh $2;
 if [ $? != 0 ]; then
