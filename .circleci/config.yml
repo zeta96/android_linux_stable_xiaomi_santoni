@@ -1,0 +1,26 @@
+# Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
+version: 2.1
+# Use a package of configuration called an orb, see https://circleci.com/docs/2.0/orb-intro/
+##orbs:
+  # Declare a dependency on the welcome-orb
+ ## welcome: circleci/welcome-orb@0.3.1
+ # Orchestrate or schedule a set of jobs, see https://circleci.com/docs/2.0/workflows/
+##workflows:
+  # Name the workflow "Welcome"
+ ## Welcome:
+    # Run the welcome/run job in its own container
+jobs:
+  compile:
+    docker:
+      - image: ubuntu:18.04
+    steps:
+      - run: apt-get -y update && apt-get -y upgrade && apt-get -y install bc build-essential zip curl libstdc++6 git wget
+      - run: git clone https://github.com/zeta96/luuvy_kernel_santoni/ --depth=1 -b clang/msm-3.18-pie
+      - run: wget https://github.com/zeta96/kernelci/blob/master/semaphoredtc9_unified
+      - run: chmod +x semaphoredtc9_unified
+      - run: bash semaphoredtc9_unified
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - compile
