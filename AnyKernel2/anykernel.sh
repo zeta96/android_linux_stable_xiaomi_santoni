@@ -162,29 +162,19 @@ rm -rf /system/etc/init/init.spectrum.sh
 rm -rf /init.spectrum.rc
 rm -rf /init.spectrum.sh
 
-# Add skip_override parameter to cmdline so user doesn't have to reflash Magisk
-if [ -d $ramdisk/.subackup -o -d $ramdisk/.backup ]; then
-  ui_print " "; ui_print "Magisk detected! Patching cmdline so reflashing Magisk is not necessary...";
-  patch_cmdline "skip_override" "skip_override";
-else
-  patch_cmdline "skip_override" "";
-fi;
-
 # If the kernel image and dtbs are separated in the zip
 decompressed_image=/tmp/anykernel/kernel/Image
 compressed_image=$decompressed_image.gz
 if [ -f $compressed_image ]; then
   # Hexpatch the kernel if Magisk is installed ('skip_initramfs' -> 'want_initramfs')
-  if [ -d $ramdisk/.backup ]; then
+  if [ -d $ramdisk/.backup -o -d $ramdisk/.magisk ]; then
     ui_print " "; ui_print "Magisk detected! Patching kernel so reflashing Magisk is not necessary...";
     $bin/magiskboot --decompress $compressed_image $decompressed_image;
     $bin/magiskboot --hexpatch $decompressed_image 736B69705F696E697472616D667300 77616E745F696E697472616D667300;
     $bin/magiskboot --compress=gzip $decompressed_image $compressed_image;
   fi;
-
-  # Concatenate all of the dtbs to the kernel
-  cat $compressed_image /tmp/anykernel/dtbs/*.dtb > /tmp/anykernel/Image.gz-dtb;
 fi;
+
 
 #####encryptio
 if [ $(cat "/vendor/etc" | grep forceencypt | wc -l) -gt "0" ]; then
