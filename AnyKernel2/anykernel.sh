@@ -2,6 +2,7 @@
 # osm0sis @ xda-developers
 
 ## AnyKernel setup
+script="$0"
 # begin properties
 properties() { '
 kernel.string=Luuvy kernel from Zamrud Khatulistiwa
@@ -9,6 +10,7 @@ do.devicecheck=1
 do.modules=0
 do.cleanup=1
 do.cleanuponabort=0
+do.f2fs_patch=1
 device.name1=santoni
 device.name2=Xiaomi
 device.name3=Redmi 4X
