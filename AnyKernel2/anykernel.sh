@@ -11,6 +11,8 @@ do.modules=0
 do.cleanup=1
 do.cleanuponabort=1
 do.f2fs_patch=1
+do.rem_encryption=0
+do.force_encryption=0
 device.name1=santoni
 device.name2=Xiaomi
 device.name3=Redmi 4X
@@ -64,10 +66,10 @@ if [ $(mount | grep f2fs | wc -l) -gt "0" ] &&
 ui_print " "; ui_print "Found fstab: $fstab";
 ui_print "- Adding f2fs support to fstab...";
 
-insert_line fstab.qcom "data        f2fs" before "data        ext4" "/dev/block/bootdevice/by-name/userdata     /data        f2fs    nosuid,nodev,noatime,inline_xattr,data_flush      wait,check,encryptable=footer,formattable,length=-16384";
-insert_line fstab.qcom "cache        f2fs" after "data        ext4" "/dev/block/bootdevice/by-name/cache     /cache        f2fs    nosuid,nodev,noatime,inline_xattr,flush_merge,data_flush wait,formattable,check";
+insert_line $fstab "data        f2fs" before "data        ext4" "/dev/block/bootdevice/by-name/userdata     /data        f2fs    nosuid,nodev,noatime,inline_xattr,data_flush      wait,check,encryptable=footer,formattable,length=-16384";
+insert_line $fstab "cache        f2fs" after "data        ext4" "/dev/block/bootdevice/by-name/cache     /cache        f2fs    nosuid,nodev,noatime,inline_xattr,flush_merge,data_flush wait,formattable,check";
 
-if [ $(cat $fstab | grep f2fs | wc -l) -eq "0" ]; then
+	if [ $(cat $fstab | grep f2fs | wc -l) -eq "0" ]; then
 		ui_print "- Failed to add f2fs support!";
 		exit 1;
 	fi;
@@ -77,6 +79,42 @@ elif [ $(mount | grep f2fs | wc -l) -gt "0" ] &&
 	ui_print "- F2FS supported!";
 fi;
 fi; #f2fs_patch
+
+if [ $(cat $fstab | grep forceencypt | wc -l) -gt "0" ]; then
+	ui_print " "; ui_print "Force encryption is enabled";
+	if [ "$(file_getprop $script do.rem_encryption)" == 0 ]; then
+		ui_print "- Force encryption removal is off!";
+	else
+		ui_print "- Force encryption removal is on!";
+	fi;
+elif [ $(cat $fstab | grep encryptable | wc -l) -gt "0" ]; then
+	ui_print " "; ui_print "Force encryption is not enabled";
+	if [ "$(file_getprop $script do.force_encryption)" == 0 ]; then
+		ui_print "- Force encryption is off!";
+	else
+		ui_print "- Force encryption is on!";
+	fi;
+fi;
+
+if [ "$(file_getprop $script do.rem_encryption)" == 1 ] &&
+   [ $(cat $fstab | grep forceencypt | wc -l) -gt "0" ]; then
+	sed -i 's/forceencrypt/encryptable/g' $fstab
+	if [ $(cat $fstab | grep forceencrypt | wc -l) -eq "0" ]; then
+		ui_print "- Removed force encryption flag!";
+	else
+		ui_print "- Failed to remove force encryption!";
+		exit 1;
+	fi;
+elif [ "$(file_getprop $script do.force_encryption)" == 1 ] &&
+     [ $(cat $fstab | grep encryptable | wc -l) -gt "0" ]; then
+	sed -i 's/encryptable/forceencrypt/g' $fstab
+	if [ $(cat $fstab | grep encryptable | wc -l) -eq "0" ]; then
+		ui_print "- Added force encryption flag!";
+	else
+		ui_print "- Failed to add force encryption!";
+		exit 1;
+	fi;
+fi;
 
 # Clean up other kernels' ramdisk files before installing ramdisk
 rm -rf /system/vendor/etc/init/init.spectrum.rc
@@ -174,6 +212,7 @@ if [ -f $compressed_image ]; then
     $bin/magiskboot --decompress $compressed_image $decompressed_image;
     $bin/magiskboot --hexpatch $decompressed_image 736B69705F696E697472616D667300 77616E745F696E697472616D667300;
     $bin/magiskboot --compress=gzip $decompressed_image $compressed_image;
+    $bin/magiskboot --dtb-patch /tmp/anykernel/*treble/*;
   fi;
 fi;
 
