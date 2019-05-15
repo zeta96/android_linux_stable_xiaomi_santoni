@@ -1,3 +1,4 @@
+
 #
 # Automatically generated file; DO NOT EDIT.
 # Linux/arm64 3.18.139 Kernel Configuration
@@ -4667,4 +4668,4 @@ CONFIG_ADRENO_IDLER=y
 #
 CONFIG_CUSTOM_HOTPLUG=y
 CONFIG_MSM_HOTPLUG=y
-CONFIG_ASMP=y
+
