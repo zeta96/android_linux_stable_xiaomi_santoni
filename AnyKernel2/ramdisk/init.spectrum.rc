@@ -86,16 +86,16 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/msm_performance/parameters/cpu_max_freq 6:1094400
 	  write /sys/module/msm_performance/parameters/cpu_max_freq 7:1094400
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
 	/* Min CPU control little*/
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 4:768000
@@ -103,16 +103,16 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 6:768000
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 7:768000
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 
 	/*lainnya*/
 	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor electron
@@ -173,8 +173,8 @@ on property:persist.spectrum.profile=0
 	  write /sys/module/msm_hotplug/offline_load 0
 	  write /sys/module/msm_hotplug/boost_lock_duration 2500
 	  write /sys/module/msm_hotplug/max_cpus_online_susp 2
-	  write /sys/module/msm_hotplug/cpus_boosted 3
-	  write /sys/module/msm_hotplug/min_cpus_online 3
+	  write /sys/module/msm_hotplug/cpus_boosted 2
+	  write /sys/module/msm_hotplug/min_cpus_online 2
 	  write /sys/module/msm_hotplug/max_cpus_online 8
 	  write /sys/module/msm_hotplug/update_rates 60
 	  write /sys/module/msm_hotplug/io_is_busy 0
@@ -256,22 +256,22 @@ on property:persist.spectrum.profile=0
 
 # Performance
 on property:persist.spectrum.profile=1
-	/* Max CPU control Big*/
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 0:1401000
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 1:1401000
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 2:1401000
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 3:1401000
+	  /* Max CPU control Big*/
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 0:1536000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 1:1536000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 2:1536000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 3:1536000
 	  chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
 	/* Min CPU control Big*/
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 0:960000
@@ -291,21 +291,21 @@ on property:persist.spectrum.profile=1
 	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 960000
 	  chmod 444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 
 	 /* Max CPU control little*/
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 4:1094400
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 5:1094400
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 6:1094400
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 7:1094400
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 4:1209600
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 5:1209600
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 6:1209600
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 7:1209600
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
 	/* Min CPU control little*/
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 4:768000
@@ -313,16 +313,16 @@ on property:persist.spectrum.profile=1
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 6:768000
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 7:768000
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 
 	/*lainnya*/
 	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
@@ -450,21 +450,21 @@ on property:persist.spectrum.profile=2
 	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1401000
 	  chmod 444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
 	/* Min CPU control Big*/
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 0:960000
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 1:960000
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 2:960000
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 3:960000
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 0:249600
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 1:249600
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 2:249600
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 3:249600
 	  chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 960000
+	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 960000
+	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 960000
+	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 960000
+	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 
 	 /* Max CPU control little*/
 	  write /sys/module/msm_performance/parameters/cpu_max_freq 4:1094400
@@ -472,72 +472,37 @@ on property:persist.spectrum.profile=2
 	  write /sys/module/msm_performance/parameters/cpu_max_freq 6:1094400
 	  write /sys/module/msm_performance/parameters/cpu_max_freq 7:1094400
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq 1094400
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
 	/* Min CPU control little*/
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 4:768000
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 5:768000
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 6:768000
-	  write /sys/module/msm_performance/parameters/cpu_min_freq 7:768000
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 4:249600
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 5:249600
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 6:249600
+	  write /sys/module/msm_performance/parameters/cpu_min_freq 7:249600
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 249600
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 
 	/*lainnya*/
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor electron
-	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor electron
-
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/above_hispeed_delay 20000 1094400:20000 1209600:20000 1401000:39000
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/align_windows 1
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/boost 0
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/boostpulse_duration 0
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/go_hispeed_load 99
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/hispeed_freq 1094400
-		write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 0
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/max_freq_hysteresis 10000
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/min_sample_time 80000 
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/powersave_bias 1
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/screen_off_maxfreq 960000
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/target_loads 80 1248000:90 1344000:80 1401000:95
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/timer_rate 20000
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/timer_slack 80000
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/use_migration_notif 1
-		write /sys/devices/system/cpu/cpu0/cpufreq/electron/use_sched_load 1
-
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/above_hispeed_delay 20000
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/align_windows 1
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/boost 0
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/boostpulse_duration 0
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/go_hispeed_load 99
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/hispeed_freq 768000
-		write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 0
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/max_freq_hysteresis 10000
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/min_sample_time 80000 
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/powersave_bias 1
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/screen_off_maxfreq 768000
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/target_loads 80
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/timer_rate 20000
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/timer_slack 80000
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/use_migration_notif 1
-		write /sys/devices/system/cpu/cpu4/cpufreq/electron/use_sched_load 1
-
+	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor Alessa
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor Alessa
 	  chmod 644 /sys/module/workqueue/parameters/power_efficient
 	  write /sys/module/workqueue/parameters/power_efficient Y
 	  write /sys/module/cpu_boost/parameters/input_boost_enabled 0
@@ -644,21 +609,21 @@ on property:persist.spectrum.profile=2
 # Gaming
 on property:persist.spectrum.profile=3
 	  /* Max CPU control Big*/
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 0:1401000
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 1:1401000
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 2:1401000
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 3:1401000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 0:1536000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 1:1536000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 2:1536000
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 3:1536000
 	  chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1401000
+	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1536000
 	  chmod 444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
 	/* Min CPU control Big*/
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 0:960000
@@ -678,21 +643,21 @@ on property:persist.spectrum.profile=3
 	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 960000
 	  chmod 444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 
 	 /* Max CPU control little*/
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 4:1094400
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 5:1094400
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 6:1094400
-	  write /sys/module/msm_performance/parameters/cpu_max_freq 7:1094400
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 4:1209600
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 5:1209600
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 6:1209600
+	  write /sys/module/msm_performance/parameters/cpu_max_freq 7:1209600
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1094400
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq 1209600
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
 	/* Min CPU control little*/
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 4:768000
@@ -700,16 +665,16 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 6:768000
 	  write /sys/module/msm_performance/parameters/cpu_min_freq 7:768000
 	  chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
 	  chmod 644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
-	  write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 768000
+	  write /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 768000
 	  chmod 444 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq 
 	/*lainnya*/
 	  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor lisi
@@ -728,7 +693,7 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/cpu_boost/parameters/input_boost_freq 7:0
 
 	# HOTPLUG
-	  write /sys/module/msm_hotplug/msm_enabled 1
+	  write /sys/module/msm_hotplug/msm_enabled 0
 	  write /sys/module/msm_hotplug/parameters/debug_mask 0
 	  write /sys/module/msm_hotplug/fast_lane_load 300
 	  write /sys/module/msm_hotplug/offline_load 0
