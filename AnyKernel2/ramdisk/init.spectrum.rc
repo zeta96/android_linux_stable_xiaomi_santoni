@@ -601,7 +601,7 @@ on property:persist.spectrum.profile=2
 	  write /proc/sys/vm/dirty_expire_centisecs 250
           write /proc/sys/vm/vfs_cache_pressure 10
 	  write /proc/sys/vm/min_free_kbytes 6764
-	  write /proc/sys/vm/oom_kill_allocating_task 1
+	  write /proc/sys/vm/oom_kill_allocating_task 0
 	  write /proc/sys/vm/page-cluster 3
 	  write /proc/sys/vm/swap_ratio_enable 80
 	  write /proc/sys/vm/overcommit_ratio 80
@@ -615,7 +615,7 @@ on property:persist.spectrum.profile=2
 	  write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 128000
 
 	# Misc
-	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 0
+	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 1
 	  write /sys/kernel/sched/gentle_fair_sleepers 0
 	  write /sys/kernel/sched/arch_power 1
 	  write /sys/kernel/power_suspend/power_suspend_mode 3
@@ -721,7 +721,7 @@ on property:persist.spectrum.profile=3
 	  write /sys/module/msm_hotplug/min_cpus_online 8
 	  write /sys/module/msm_hotplug/max_cpus_online 8
 	  write /sys/module/msm_hotplug/update_rates 60
-	  write /sys/module/msm_hotplug/io_is_busy 1
+	  write /sys/module/msm_hotplug/io_is_busy 0
 	  
 	# THERMAL
 	  write /sys/module/msm_thermal/parameters/enabled N
@@ -772,12 +772,12 @@ on property:persist.spectrum.profile=3
 	  write /proc/sys/vm/dirty_background_ratio 10
 	  write /proc/sys/vm/dirty_writeback_centisecs 500
 	  write /proc/sys/vm/dirty_expire_centisecs 100
-	  write /proc/sys/vm/oom_kill_allocating_task 1
+	  write /proc/sys/vm/oom_kill_allocating_task 0
 	  write /proc/sys/vm/laptop_mode 0
 	  write /proc/sys/vm/swappiness 70
+	  write /proc/sys/vm/page-cluster 3
           write /proc/sys/vm/vfs_cache_pressure 500
 	  write /proc/sys/vm/min_free_kbytes 8192
-	  write /proc/sys/vm/page-cluster 3
 	  write /proc/sys/vm/swap_ratio_enable 70
 	  write /proc/sys/vm/overcommit_ratio 25
 	  write /proc/sys/vm/drop_caches 3
@@ -790,7 +790,7 @@ on property:persist.spectrum.profile=3
           write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 202640
 
 	# Misc
-	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 0
+	  write /sys/kernel/dyn_fsync/Dyn_fsync_active 1
 	  write /sys/kernel/sched/gentle_fair_sleepers 1
 	  write /sys/kernel/sched/arch_power 0
 	  write /sys/kernel/power_suspend/power_suspend_mode 3
