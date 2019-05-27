@@ -3077,6 +3077,12 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
 			fuse_sync_writes(inode);
 		}
 	}
+	if (!(mode & FALLOC_FL_KEEP_SIZE) &&
+	    offset + length > i_size_read(inode)) {
+		err = inode_newsize_ok(inode, offset + length);
+		if (err)
+			goto out;
+	}
 
 	if (!(mode & FALLOC_FL_KEEP_SIZE))
 		set_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
