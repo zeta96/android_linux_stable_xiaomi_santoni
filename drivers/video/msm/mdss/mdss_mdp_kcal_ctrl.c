@@ -21,7 +21,6 @@
 #include <linux/platform_device.h>
 #include <linux/init.h>
 #include <linux/module.h>
-
 #include "mdss_mdp.h"
 
 #define DEF_PCC 0x100
@@ -29,16 +28,20 @@
 #define PCC_ADJ 0x80
 
 struct kcal_lut_data {
-	int red;
-	int green;
-	int blue;
-	int minimum;
-	int enable;
-	int sat;
-	int hue;
-	int val;
-	int cont;
+        int red;
+        int green;
+        int blue;
+        int minimum;
+        int enable;
+        int sat;
+        int hue;
+        int val;
+        int cont;
 };
+
+#ifdef CONFIG_KLAPSE
+struct kcal_lut_data *lut_cpy;
+#endif
 
 struct mdss_mdp_ctl *fb0_ctl = 0;
 
@@ -156,7 +159,7 @@ static void mdss_mdp_kcal_update_pa(struct kcal_lut_data *lut_data)
 		mdss_mdp_pa_config(fb0_ctl->mfd, &pa_config, &copyback);
 	} else {
 		memset(&pa_v2_config, 0, sizeof(struct mdp_pa_v2_cfg_data));
-		
+
 		pa_v2_config.version = mdp_pa_v1_7;
 		pa_v2_config.block = MDP_LOGICAL_BLOCK_DISP_0;
 		pa_v2_config.pa_v2_data.flags = lut_data->enable ?
@@ -387,6 +390,33 @@ static DEVICE_ATTR(kcal_val, S_IWUSR | S_IRUGO, kcal_val_show, kcal_val_store);
 static DEVICE_ATTR(kcal_cont, S_IWUSR | S_IRUGO, kcal_cont_show,
 	kcal_cont_store);
 
+#ifdef CONFIG_KLAPSE
+void klapse_kcal_push(int r, int g, int b)
+{
+  lut_cpy->red = r;
+	lut_cpy->green = g;
+	lut_cpy->blue = b;
+
+	mdss_mdp_kcal_update_pcc(lut_cpy);
+}
+
+/* kcal_get_color() :
+ * @param : 0 = red; 1 = green; 2 = blue;
+ * @return : Value of color corresponding to @param, or 0 if not found
+ */
+unsigned short kcal_get_color(unsigned short int code)
+{
+  if (code == 0)
+    return lut_cpy->red;
+  else if (code == 1)
+    return lut_cpy->green;
+  else if (code == 2)
+    return lut_cpy->blue;
+
+  return 0;
+}
+#endif
+
 static int kcal_ctrl_probe(struct platform_device *pdev)
 {
 	int ret;
@@ -415,9 +445,14 @@ static int kcal_ctrl_probe(struct platform_device *pdev)
 	mdss_mdp_kcal_update_pa(lut_data);
 	mdss_mdp_kcal_display_commit();
 
+#ifdef CONFIG_KLAPSE
+	lut_cpy = lut_data;
+#endif
+
 	ret = device_create_file(&pdev->dev, &dev_attr_kcal);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_min);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_enable);
+	//ret |= device_create_file(&pdev->dev, &dev_attr_kcal_invert);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_sat);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_hue);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_val);
@@ -435,6 +470,7 @@ static int kcal_ctrl_remove(struct platform_device *pdev)
 	device_remove_file(&pdev->dev, &dev_attr_kcal);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_min);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_enable);
+	//device_remove_file(&pdev->dev, &dev_attr_kcal_invert);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_sat);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_hue);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_val);
