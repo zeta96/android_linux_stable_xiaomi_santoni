@@ -389,6 +389,8 @@ KBUILD_CFLAGS   := -mcpu=cortex-a53+crc+crypto -Wall -Wundef -Wstrict-prototypes
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
 		   -std=gnu89
+		   
+KBUILD_CFLAGS += -mcpu=cortex-a53+crypto+crc
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
