@@ -23,14 +23,14 @@
 /* DO NOT EDIT */
 static struct kobject *charger_limiter;
 static struct delayed_work charger_limiter_work;
-static struct workqueue_struct *charger_limiter_wq;
+static struct workqueue_struct *charge_limiter_wq;
 
 /* Tunables */
 static int charging_limit = 100;
 
 static void reschedule_worker(int ms)
 {
-	queue_delayed_work(charger_limiter_wq,
+	queue_delayed_work(charge_limiter_wq,
 		&charger_limiter_work, msecs_to_jiffies(ms));
 }
 
@@ -46,17 +46,31 @@ static int battery_charging_enabled(struct power_supply *batt_psy, bool enable)
 	return -ENXIO;
 }
 
+static void cl_battery_charging_enabled(struct power_supply *batt_psy, bool enable)
+{
+	int rc = 0;
+
+	if (enable) {
+		rc = battery_charging_enabled(batt_psy, 1);
+		if (rc)
+			pr_err("Failed to enable battery charging!\n");
+	} else {
+		rc = battery_charging_enabled(batt_psy, 0);
+		if (rc)
+			pr_err("Failed to disable battery charging!\n");
+	}
+}
+
 static void charger_limiter_worker(struct work_struct *work)
 {
 	struct power_supply *batt_psy = power_supply_get_by_name("battery");
 	struct power_supply *usb_psy = power_supply_get_by_name("usb");
 	union power_supply_propval status, bat_percent;
 	union power_supply_propval present = {0,}, charging_enabled = {0,};
-	int ms_timer = 1000, rc = 0;
+	int ms_timer = 1000;
 
-	/* re-schdule and increase the timer if not ready */
 	if (!batt_psy->get_property || !usb_psy->get_property) {
-		ms_timer = 10000;
+		ms_timer = 5000;
 		goto reschedule;
 	}
 
@@ -72,24 +86,15 @@ static void charger_limiter_worker(struct work_struct *work)
 	usb_psy->get_property(usb_psy,
 			POWER_SUPPLY_PROP_PRESENT, &present);
 
+	if (bat_percent.intval < charging_limit || !present.intval) {
+		if (!charging_enabled.intval)
+			cl_battery_charging_enabled(batt_psy, true);
+	}
+
 	if (status.intval == POWER_SUPPLY_STATUS_CHARGING || present.intval) {
 		if (charging_enabled.intval &&
-			bat_percent.intval >= charging_limit) {
-			rc = battery_charging_enabled(batt_psy, 0);
-			if (rc)
-				pr_err("Failed to disable battery charging!\n");
-		} else if (!charging_enabled.intval &&
-			bat_percent.intval < charging_limit) {
-			rc = battery_charging_enabled(batt_psy, 1);
-			if (rc)
-				pr_err("Failed to enable battery charging!\n");
-		}
-	} else if (bat_percent.intval < charging_limit || !present.intval) {
-		if (!charging_enabled.intval) {
-			rc = battery_charging_enabled(batt_psy, 1);
-			if (rc)
-				pr_err("Failed to enable battery charging!\n");
-		}
+			bat_percent.intval >= charging_limit)
+			cl_battery_charging_enabled(batt_psy, false);
 	}
 
 reschedule:
@@ -150,8 +155,8 @@ static int __init charger_limiter_init(void)
 	charger_limiter = kobject_create_and_add("charger_limiter", kernel_kobj);
 	rc = sysfs_create_group(charger_limiter, &charger_limiter_attr_group);
 	if (!rc) {
-		charger_limiter_wq = alloc_workqueue("charger_limiter_wq", WQ_HIGHPRI, 0);
-		if (!charger_limiter_wq)
+		charge_limiter_wq = alloc_workqueue("charger_limiter_wq", WQ_HIGHPRI, 0);
+		if (!charge_limiter_wq)
 			return -ENOMEM;
 
 		INIT_DELAYED_WORK(&charger_limiter_work, charger_limiter_worker);
