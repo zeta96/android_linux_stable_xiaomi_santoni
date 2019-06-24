@@ -636,20 +636,12 @@ config MSM_BCL_PERIPHERAL_CTL
 	  provides routines to configure and monitor the BCL
 	  PMIC peripheral.
 
-
-config CHARGER_LIMITER
-	bool "charger limiter"
-	default n
-	help
-	  This driver will cut your charging at certain values if enabled.
-
 config DISABLE_TEMP_PROTECT
 	bool "control of TEMP protect"
 	default n
 	help
 	  Say Y here to enable a function which disabled TEMP protect...
 	  WARNNING:Only SCM could open it.
-
 
 source "drivers/power/reset/Kconfig"
 
