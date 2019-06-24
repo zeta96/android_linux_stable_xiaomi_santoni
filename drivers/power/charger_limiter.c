@@ -23,9 +23,16 @@
 /* DO NOT EDIT */
 static struct kobject *charger_limiter;
 static struct delayed_work charger_limiter_work;
+static struct workqueue_struct *charger_limiter_wq;
 
 /* Tunables */
 static int charging_limit = 100;
+
+static void reschedule_worker(int ms)
+{
+	queue_delayed_work(charger_limiter_wq,
+		&charger_limiter_work, msecs_to_jiffies(ms));
+}
 
 static int battery_charging_enabled(struct power_supply *batt_psy, bool enable)
 {
@@ -86,8 +93,7 @@ static void charger_limiter_worker(struct work_struct *work)
 	}
 
 reschedule:
-	schedule_delayed_work(&charger_limiter_work,
-				msecs_to_jiffies(ms_timer));
+	reschedule_worker(ms_timer);
 }
 
 /******************************************************************/
@@ -144,9 +150,12 @@ static int __init charger_limiter_init(void)
 	charger_limiter = kobject_create_and_add("charger_limiter", kernel_kobj);
 	rc = sysfs_create_group(charger_limiter, &charger_limiter_attr_group);
 	if (!rc) {
+		charger_limiter_wq = alloc_workqueue("charger_limiter_wq", WQ_HIGHPRI, 0);
+		if (!charger_limiter_wq)
+			return -ENOMEM;
+
 		INIT_DELAYED_WORK(&charger_limiter_work, charger_limiter_worker);
-		schedule_delayed_work(&charger_limiter_work,
-						msecs_to_jiffies(1000));
+		reschedule_worker(1000);
 	}
 
 	return 0;
