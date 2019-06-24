@@ -1,4 +1,4 @@
-menuconfig POWER_SUPPLY
+drivers/power/Kconfigmenuconfig POWER_SUPPLY
 	bool "Power supply class support"
 	help
 	  Say Y here to enable power supply class support. This allows
