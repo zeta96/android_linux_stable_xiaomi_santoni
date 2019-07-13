@@ -52,10 +52,6 @@ KBUILD_CFLAGS	+= -fno-pic
 KBUILD_CFLAGS	+= $(call cc-option, -mpc-relative-literal-loads)
 KBUILD_AFLAGS	+= $(vdso32)
 
-# Cortex-A53 flags
-KBUILD_CFLAGS	+= $(call cc-option, -mcpu=cortex-a53+crypto+crc)
-KBUILD_CFLAGS	+= $(call cc-option, -mtune=cortex-a53)
-
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -DCONFIG_ARCH_SUPPORTS_INT128
 else
