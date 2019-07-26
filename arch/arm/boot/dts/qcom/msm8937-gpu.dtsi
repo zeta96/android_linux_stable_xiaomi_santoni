@@ -180,7 +180,7 @@
 			/* NOM */
 			qcom,gpu-pwrlevel@5 {
 				reg = <5>;
-				qcom,gpu-freq = <320000000>;
+				qcom,gpu-freq = <375000000>;
 				qcom,bus-freq = <6>;
 				qcom,bus-min = <5>;
 				qcom,bus-max = <8>;
@@ -189,7 +189,7 @@
 			/* SVS+ */
 			qcom,gpu-pwrlevel@6 {
 				reg = <6>;
-				qcom,gpu-freq = <240000000>;
+				qcom,gpu-freq = <300000000>;
 				qcom,bus-freq = <5>;
 				qcom,bus-min = <4>;
 				qcom,bus-max = <7>;
@@ -198,7 +198,7 @@
 			/* SVS */
 			qcom,gpu-pwrlevel@7 {
 				reg = <7>;
-				qcom,gpu-freq = <160000000>;
+				qcom,gpu-freq = <216000000>;
 				qcom,bus-freq = <3>;
 				qcom,bus-min = <1>;
 				qcom,bus-max = <4>;
