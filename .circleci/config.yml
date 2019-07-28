@@ -14,7 +14,7 @@ jobs:
     docker:
       - image: ubuntu:18.04
     steps:
-      - run: apt-get -y update && apt-get -y upgrade && apt-get -y install bc build-essential zip curl libstdc++6 git wget
+      - run: apt-get -y update && apt-get -y upgrade && apt-get -y install bc build-essential zip curl libstdc++6 git wget zstd
       - run: git clone https://github.com/zeta96/luuvy_kernel_santoni/ --depth=1 -b clang/msm-3.18-pie
       - run: curl https://raw.githubusercontent.com/zeta96/kernelci/master/circleci_dtc9_unified --output kernel.sh
       - run: chmod +x kernel.sh
