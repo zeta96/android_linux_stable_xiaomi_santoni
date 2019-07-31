@@ -1,4 +1,4 @@
-CONFIG_LOCALVERSION="-LuuvyKernel-OneDotSix-Black_Rider_"
+CONFIG_LOCALVERSION="-LuuvyKernel-OneDotSix-Celty-The_Black_Rider"
 CONFIG_LOCALVERSION_AUTO=n
 # CONFIG_USELIB is not set
 CONFIG_SYSTEM_TRUSTED_KEYRING=y
