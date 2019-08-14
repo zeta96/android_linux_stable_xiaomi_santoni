@@ -1,0 +1,18 @@
+kind: pipeline
+name: kernel_santoni
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  depth: 1
+
+steps:
+  - name: Compile
+    image: kdrag0n/fedora-kbuild:gcc-9.1.1
+    commands:
+      - sh -c "$(curl -fsSL https://raw.githubusercontent.com/zeta96/kernelci/master/L_drone_dtc_luv_old)"
+    when:
+      branch:
+        - clang/msm-3.18-pie
